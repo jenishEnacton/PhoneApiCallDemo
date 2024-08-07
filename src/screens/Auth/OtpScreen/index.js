@@ -1,23 +1,30 @@
-import {Alert, StyleSheet, Text, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
 import Header from '../../../components/core/Header';
 import {COLORS} from '../../../assets/Theme/colors';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import CButton from '../../../components/core/CButton';
 import {setAsyncData} from '../../../assets/Utils/asyncstorage';
+import {errorToast, sucessToast} from '../../../components/core/Toast';
+import {useSelector} from 'react-redux';
 
 export default function OtpScreen({route, navigation}) {
   const {otp} = route?.params;
+  const state = useSelector(state => state?.otp?.phone_number);
 
   const [enterOtp, setEnterOtp] = useState(null);
 
-  const onPressVerifyOtp = () => {
+  const onPressVerifyOtp = async () => {
     if (enterOtp == otp) {
-      Alert.alert('User Verify Sucessfully');
-      setAsyncData('ISverified', (isVerify = true));
-      navigation.navigate('Home');
+      if (state) {
+        await setAsyncData('USERINFO', state).then(res => {
+          sucessToast('Sucess', 'User Verify Sucessfully');
+          setAsyncData('ISverified', (isVerify = true));
+          navigation.navigate('Home');
+        });
+      }
     } else {
-      Alert.alert('Please Enter correct OTP');
+      errorToast('Error!', 'Please Enter correct OTP');
     }
   };
 

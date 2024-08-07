@@ -1,4 +1,4 @@
-import {Alert, Button, View} from 'react-native';
+import {View} from 'react-native';
 import React, {useRef, useState} from 'react';
 import styles from './style';
 import Header from '../../../components/core/Header';
@@ -23,7 +23,7 @@ export default function Login({navigation}) {
     //       setuserInfo(res.user.email);
     //       setidToken(res.idToken);
     //       console.log('Res', res.user.email);
-    //       Alert.alert('User login Sucessfully');
+    //       sucessToast('Sucess','User login Sucessfully');
     //       if (res) {
     //         let min = Math.ceil(1000);
     //         let max = Math.floor(9999);
