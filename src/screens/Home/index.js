@@ -12,21 +12,21 @@ import {COLORS} from '../../assets/Theme/colors';
 
 export default function Home({navigation}) {
   const [isVisible, setIsVisible] = useState(false);
-  const [userInfo, setUserInfo] = useState('');
+  // const [userInfo, setUserInfo] = useState('');
 
-  useEffect(() => {
-    getUserInfo();
-  }, []);
+  // useEffect(() => {
+  //   getUserInfo();
+  // }, []);
 
-  const getUserInfo = async () => {
-    console.log('Get User');
-    let data = await getAsyncData('USERINFO');
-    setUserInfo(data);
-  };
+  // const getUserInfo = async () => {
+  //   console.log('Get User');
+  //   let data = await getAsyncData('USERINFO');
+  //   setUserInfo(data);
+  // };
 
-  const onPressLog = () => {
-    setAsyncData('ISverified', (isVerify = false));
-    clearAsyncData('USERINFO');
+  const onPressLog = async () => {
+    await setAsyncData('ISverified', (isVerify = false));
+    // clearAsyncData('USERINFO');
     navigation.navigate('Login');
     setIsVisible(false);
   };
@@ -36,7 +36,7 @@ export default function Home({navigation}) {
       <Header title={'Home'} />
       <View style={styles.inner_container}>
         <Text style={styles.logintitle}>Logged in User</Text>
-        <Text style={styles.usernumber}>{!!userInfo ? userInfo : null}</Text>
+        {/* <Text style={styles.usernumber}>{!!userInfo ? userInfo : null}</Text> */}
         <CButton
           title={'Log Out'}
           extrasty={styles.button}

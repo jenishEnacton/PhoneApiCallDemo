@@ -1,28 +1,59 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import Header from '../../../components/core/Header';
 import {COLORS} from '../../../assets/Theme/colors';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import CButton from '../../../components/core/CButton';
 import {setAsyncData} from '../../../assets/Utils/asyncstorage';
 import {errorToast, sucessToast} from '../../../components/core/Toast';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {request_user_email_otp} from '../../../Redux/Actions/userAuthActions';
 
 export default function OtpScreen({route, navigation}) {
-  const {otp} = route?.params;
+  const {otp, mobile} = route?.params;
+
+  const dispatch = useDispatch();
   const state = useSelector(state => state?.otp?.phone_number);
 
   const [enterOtp, setEnterOtp] = useState(null);
+  const [newOtp, setNewOtp] = useState('');
+  const [timer, setTimer] = useState(0);
+  const [isResendDisabled, setIsResendDisabled] = useState(true);
+
+  useEffect(() => {
+    let interval;
+    if (timer > 0) {
+      interval = setInterval(() => {
+        setTimer(prevTimer => prevTimer - 1);
+      }, 1000);
+    } else if (timer === 0 && isResendDisabled) {
+      setIsResendDisabled(false);
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [timer, isResendDisabled]);
+
+  const handleResendOtp = () => {
+    setIsResendDisabled(true);
+    setTimer(10);
+
+    let min = Math.ceil(1000);
+    let max = Math.floor(9999);
+    let newOtp = Math.floor(Math.random() * (max - min + 1)) + min;
+    setNewOtp(newOtp);
+    console.log('Resent OTP', newOtp);
+    // dispatch(request_user_email_otp(mobile, newOtp));
+  };
 
   const onPressVerifyOtp = async () => {
-    if (enterOtp == otp) {
-      if (state) {
-        await setAsyncData('USERINFO', state).then(res => {
-          sucessToast('Sucess', 'User Verify Sucessfully');
-          setAsyncData('ISverified', (isVerify = true));
-          navigation.navigate('Home');
-        });
-      }
+    if (enterOtp == otp || newOtp) {
+      // if (state) {
+      // await setAsyncData('USERINFO', state).then(res => {
+      sucessToast('Sucess', 'User Verify Sucessfully');
+      setAsyncData('ISverified', (isVerify = true));
+      navigation.navigate('Home');
+      // });
+      // }
     } else {
       errorToast('Error!', 'Please Enter correct OTP');
     }
@@ -44,6 +75,13 @@ export default function OtpScreen({route, navigation}) {
           }}
         />
         <CButton title={'Verify'} onPress={onPressVerifyOtp} disabled={!otp} />
+        {isResendDisabled && (
+          <Text
+            style={{fontSize: 15, color: COLORS.black}}>{`${timer} s`}</Text>
+        )}
+        <TouchableOpacity onPress={handleResendOtp} disabled={isResendDisabled}>
+          <Text>{'Resend OTP'}</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
