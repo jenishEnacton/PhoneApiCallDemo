@@ -11,5 +11,5 @@ export const getAsyncData = async key => {
 };
 
 export const clearAsyncData = async key => {
-  await AsyncStorage.clear(key);
+  await AsyncStorage.removeItem(key);
 };

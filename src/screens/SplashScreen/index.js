@@ -3,6 +3,7 @@ import React, {useEffect} from 'react';
 import {AppImages} from '../../assets/images';
 import {COLORS} from '../../assets/Theme/colors';
 import {getAsyncData} from '../../assets/Utils/asyncstorage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SplashScreen({navigation}) {
   useEffect(() => {
@@ -19,6 +20,13 @@ export default function SplashScreen({navigation}) {
         navigation.replace('Login');
       }
     });
+    // await AsyncStorage.getItem('USER_AUTH').then(res => {
+    //   if (res) {
+    //     navigation.replace('Home');
+    //   } else {
+    //     navigation.replace('Login');
+    //   }
+    // });
   };
 
   return (

@@ -26,6 +26,7 @@ export default function Home({navigation}) {
 
   const onPressLog = async () => {
     await setAsyncData('ISverified', (isVerify = false));
+    clearAsyncData('USER_AUTH');
     // clearAsyncData('USERINFO');
     navigation.navigate('Login');
     setIsVisible(false);

@@ -45,9 +45,47 @@ export const failed_user_email_otp = () => ({
   },
 });
 
-// export const request_otp_verification = otp_sent => ({
-//   type: types.REQUEST_OTP_VERIFICATION,
-//   payload: {
-//     otp_sent: otp_sent,
-//   },
-// });
+export const request_social_login = (
+  email,
+  social_id,
+  social_type,
+  password,
+  mobile,
+) => ({
+  type: types.REQUEST_SOCIAL_LOGIN,
+  payload: {
+    email,
+    social_id,
+    social_type,
+    password,
+    mobile,
+  },
+});
+
+export const success_social_login = data => ({
+  type: types.SUCCESS_SOCIAL_LOGIN,
+  payload: {
+    userToken: data,
+  },
+});
+
+export const failed_social_login = () => ({
+  type: types.FAILED_SOCIAL_LOGIN,
+  payload: {
+    userToken: '',
+  },
+});
+
+export const success_user_login = data => ({
+  type: types.SUCCESS_USER_LOGIN,
+  payload: {
+    userToken: data,
+  },
+});
+
+export const failed_user_login = () => ({
+  type: types.FAILED_USER_LOGIN,
+  payload: {
+    userToken: {},
+  },
+});

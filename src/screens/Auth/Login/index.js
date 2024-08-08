@@ -4,7 +4,10 @@ import styles from './style';
 import Header from '../../../components/core/Header';
 import GoogleButton, {GoogleLogin} from '../../../components/core/GoogleButton';
 import {useDispatch} from 'react-redux';
-import {request_user_email_otp} from '../../../Redux/Actions/userAuthActions';
+import {
+  request_social_login,
+  request_user_email_otp,
+} from '../../../Redux/Actions/userAuthActions';
 import {Field, Formik} from 'formik';
 import {phonenumberschema} from '../../../assets/Utils/validation';
 import CustomeInput from '../../../components/core/TextInput';
@@ -25,9 +28,10 @@ export default function Login({navigation}) {
     try {
       await GoogleLogin()
         .then(res => {
-          console.log('Email Res', res);
-          console.log('Res', res.user.email);
-          sucessToast('Sucess', 'User login Sucessfully,Please Verify OTP');
+          // dispatch(
+          //   request_social_login(res.user.email, res.user.id, 'email', '', ''),
+          // );
+          // sucessToast('Sucess', 'User login Sucessfully,Please Verify OTP');
           if (res) {
             let min = Math.ceil(1000);
             let max = Math.floor(9999);
@@ -92,7 +96,6 @@ export default function Login({navigation}) {
             />
           </>
         )}
-
         {isVerified && (
           <Formik
             innerRef={formikRef}
