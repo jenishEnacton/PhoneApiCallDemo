@@ -39,6 +39,29 @@ const user_auth_api = async (url, body) => {
   }
 };
 
+export const userFbLogin = token => {
+  return new Promise((resolve, reject) => {
+    fetch(
+      'https://graph.facebook.com/v2.5/me?fields=email,first_name,last_name,friends&access_token=' +
+        token,
+      {
+        method: 'GET',
+      },
+    )
+      .then(res => res.json())
+      .then(async responseJson => {
+        return resolve(responseJson);
+      })
+      .catch(e => {
+        console.log(e);
+        let error = {
+          message: 'Server not responding!',
+        };
+        reject(error);
+      });
+  });
+};
+
 const api = {
   user_auth_api,
 };

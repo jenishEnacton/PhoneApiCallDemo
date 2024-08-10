@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
   inner_container: {
     flex: 1,
     justifyContent: 'center',
+    // marginTop: 50,
     alignItems: 'center',
   },
   otpInput: {

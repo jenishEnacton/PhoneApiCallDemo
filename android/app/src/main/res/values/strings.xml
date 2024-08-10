@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GoogleSignDemo</string>
+    <string name="facebook_app_id">1174222193633123</string>
+    <string name="facebook_client_token">f9824b5878b4fcc4a0d3a017ad6e40e5</string>
 </resources>

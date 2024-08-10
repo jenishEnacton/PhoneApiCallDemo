@@ -1,5 +1,6 @@
 import {StyleSheet, Text, TextInput} from 'react-native';
 import React from 'react';
+import {COLORS} from '../../../assets/Theme/colors';
 
 export default function CustomeInput(props) {
   const {
@@ -17,6 +18,7 @@ export default function CustomeInput(props) {
           props.multiline && {height: props.numberOfLines * 40},
           hasError && styles.errorInput,
         ]}
+        placeholderTextColor={COLORS.black}
         value={value}
         onChangeText={text => onChange(name)(text)}
         onBlur={() => {

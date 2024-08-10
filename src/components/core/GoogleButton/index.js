@@ -20,11 +20,11 @@ export const GoogleLogin = async () => {
 };
 
 export default function GoogleButton(props) {
-  const {onPress} = props;
+  const {onPress, image, title} = props;
   return (
     <TouchableOpacity style={styles.googlebtn} onPress={onPress}>
-      <Image source={AppImages.google_icon} style={styles.googleicon} />
-      <Text style={styles.button}>Google</Text>
+      <Image source={image} style={styles.googleicon} />
+      <Text style={styles.button}>{title}</Text>
     </TouchableOpacity>
   );
 }

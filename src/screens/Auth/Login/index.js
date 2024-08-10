@@ -1,4 +1,11 @@
-import {Text, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  Platform,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useRef, useState} from 'react';
 import styles from './style';
 import Header from '../../../components/core/Header';
@@ -21,7 +28,10 @@ import {Loader} from '../../../components/core/Loader';
 import {sucessToast} from '../../../components/core/Toast';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import Divider from '../../../components/core/Divider';
-import {navigate} from '../../../navigation/Appnavigation';
+import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
+import {AppImages} from '../../../assets/images';
+import {COLORS} from '../../../assets/Theme/colors';
+import {userFbLogin} from '../../../Redux/Services/api';
 
 export default function Login({navigation}) {
   const [isLoading, setIsLoading] = useState(false);
@@ -30,16 +40,12 @@ export default function Login({navigation}) {
   const [isVerified, setIsVerified] = useState(false);
   const formikRef = useRef(null);
   const dispatch = useDispatch();
-  // const signUpToken = useSelector(state => state?.otp?.user_token);
-  // console.log(signUpToken);
 
   const handleGoogleLogin = async () => {
     try {
       await GoogleLogin()
         .then(res => {
-          // dispatch(
-          //   request_social_login(res.user.email, res.user.id, 'email', '', ''),
-          // );
+          dispatch(request_social_login(res.user.email, res.user.id, 'email'));
           // sucessToast('Sucess', 'User login Sucessfully,Please Verify OTP');
           if (res) {
             let min = Math.ceil(1000);
@@ -87,11 +93,53 @@ export default function Login({navigation}) {
     }
   };
 
+  async function fbsignin() {
+    LoginManager.logOut();
+    if (Platform.OS === 'android') {
+      LoginManager.setLoginBehavior('web_only');
+    }
+    LoginManager.logInWithPermissions(['public_profile', 'email'])
+      .then(result => {
+        if (result.isCancelled) {
+          console.log('Login Cancelled');
+        } else {
+          AccessToken.getCurrentAccessToken().then(data => {
+            const {accessToken} = data;
+            userFbLogin(accessToken).then(response => {
+              console.log('Ress', response);
+              dispatch(
+                request_social_login({
+                  email: response.email,
+                  social_id: response.id,
+                  social_type: 'facebook',
+                }),
+              );
+            });
+          });
+        }
+      })
+      .catch(e => console.log(e));
+  }
+
   return (
     <View style={styles.container}>
       <Header title={'Google Login'} />
       <View style={styles.inner_container}>
-        <GoogleButton onPress={handleGoogleLogin} />
+        {/* <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            alignItems: 'center',
+          }}> */}
+        <GoogleButton
+          onPress={handleGoogleLogin}
+          image={AppImages.google_icon}
+          title={'Google'}
+        />
+        <GoogleButton
+          image={AppImages.facebook_icon}
+          onPress={fbsignin}
+          title={'Facebook'}
+        />
         <Divider />
         <Formik
           innerRef={formikRef}
@@ -127,61 +175,64 @@ export default function Login({navigation}) {
               <TouchableOpacity
                 style={styles.signupview}
                 onPress={() => navigation.navigate('Signup')}>
-                <Text>Don’t have an account?</Text>
+                <Text style={{color: COLORS.black}}>
+                  Don’t have an account?
+                </Text>
                 <Text style={styles.signup_text}>SignUp</Text>
               </TouchableOpacity>
             </>
           )}
         </Formik>
-        {generateOtp && (
-          <>
-            <Text style={styles.otp_title}>Verify OTP</Text>
-            <OTPInputView
-              style={styles.otpInput}
-              pinCount={4}
-              autoFocusOnLoad={false}
-              codeInputFieldStyle={styles.underlineStyleBase}
-              codeInputHighlightStyle={styles.underlineStyleHighLighted}
-              onCodeFilled={code => {
-                setOtp(code);
+        {/* {generateOtp && (
+            <>
+              <Text style={styles.otp_title}>Verify OTP</Text>
+              <OTPInputView
+                style={styles.otpInput}
+                pinCount={4}
+                autoFocusOnLoad={false}
+                codeInputFieldStyle={styles.underlineStyleBase}
+                codeInputHighlightStyle={styles.underlineStyleHighLighted}
+                onCodeFilled={code => {
+                  setOtp(code);
+                }}
+              />
+              <CButton
+                title={'Verify'}
+                onPress={onPressVerifyOtp}
+                disabled={!otp}
+              />
+            </>
+          )}
+          {isVerified && (
+            <Formik
+              innerRef={formikRef}
+              initialValues={{
+                phoneNumber: '+91 ',
               }}
-            />
-            <CButton
-              title={'Verify'}
-              onPress={onPressVerifyOtp}
-              disabled={!otp}
-            />
-          </>
-        )}
-        {isVerified && (
-          <Formik
-            innerRef={formikRef}
-            initialValues={{
-              phoneNumber: '+91 ',
-            }}
-            validationSchema={phonenumberschema}
-            onSubmit={(values, {resetForm}) => {
-              handleNumSubmt(values);
-              resetForm();
-            }}>
-            {({handleSubmit, isValid, values}) => (
-              <>
-                <Field
-                  values={values.phoneNumber}
-                  component={CustomeInput}
-                  name="phoneNumber"
-                  placeholder="Phone Number"
-                  keyboardType="numeric"
-                />
-                <CButton
-                  title={'Submit'}
-                  onPress={handleSubmit}
-                  disabled={!isValid}
-                />
-              </>
-            )}
-          </Formik>
-        )}
+              validationSchema={phonenumberschema}
+              onSubmit={(values, {resetForm}) => {
+                handleNumSubmt(values);
+                resetForm();
+              }}>
+              {({handleSubmit, isValid, values}) => (
+                <>
+                  <Field
+                    values={values.phoneNumber}
+                    component={CustomeInput}
+                    name="phoneNumber"
+                    placeholder="Phone Number"
+                    keyboardType="numeric"
+                  />
+                  <CButton
+                    title={'Submit'}
+                    onPress={handleSubmit}
+                    disabled={!isValid}
+                  />
+                </>
+              )}
+            </Formik>
+          )} */}
+        {/* </ScrollView> */}
       </View>
       {isLoading && <Loader />}
     </View>

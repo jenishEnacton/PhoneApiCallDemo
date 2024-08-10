@@ -69,23 +69,16 @@ function* request_social_login(action) {
     if (
       user_exist_response.ok &&
       user_exist_response.data.success &&
-      user_exist_response.data.data &&
-      !user_exist_response.data?.data?.error
+      user_exist_response.data
     ) {
       const response = yield call(api.user_auth_api, 'auth/social', {
         email: action.payload.email,
         provider_id: action.payload.social_id,
         provider_type: action.payload.social_type,
         password: action.payload.social_type + action.payload.social_id,
-        phone_number: action.payload.mobile,
       });
       console.log('social login', response);
-      if (
-        response.ok &&
-        response.data.success &&
-        response.data.data &&
-        !response.data?.data?.error
-      ) {
+      if (response.ok && response.data.success && response.data) {
         yield put(auth_actions.success_user_login(response.data.data));
         sucessToast('Sucess', 'Login Success');
         yield AsyncStorage.setItem(
@@ -100,6 +93,7 @@ function* request_social_login(action) {
             is_social: true,
           }),
         );
+        navigate('Home');
       } else {
         if (response.data?.data?.error?.email) {
           errorToast(response.data?.data?.error?.email[0]);
