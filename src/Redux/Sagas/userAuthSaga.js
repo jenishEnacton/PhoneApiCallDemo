@@ -128,7 +128,6 @@ function* request_user_registration(action) {
       password: action.payload.password,
       device_name: getUniqueId,
     });
-    console.log(response);
     if (
       response.ok &&
       response.data.success &&
