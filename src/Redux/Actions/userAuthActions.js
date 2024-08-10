@@ -76,6 +76,14 @@ export const failed_social_login = () => ({
   },
 });
 
+export const request_user_login = (email, password) => ({
+  type: types.REQUEST_USER_LOGIN,
+  payload: {
+    email,
+    password,
+  },
+});
+
 export const success_user_login = data => ({
   type: types.SUCCESS_USER_LOGIN,
   payload: {
@@ -87,5 +95,27 @@ export const failed_user_login = () => ({
   type: types.FAILED_USER_LOGIN,
   payload: {
     userToken: {},
+  },
+});
+
+export const request_user_registration = (email, password, mobile) => ({
+  type: types.REQUEST_USER_REGISTRATION,
+  payload: {
+    email,
+    password,
+  },
+});
+
+export const success_user_registration = data => ({
+  type: types.SUCCESS_USER_REGISTRATION,
+  payload: {
+    user_token: data,
+  },
+});
+
+export const failed_user_registration = () => ({
+  type: types.FAILED_USER_REGISTRATION,
+  payload: {
+    user_token: '',
   },
 });

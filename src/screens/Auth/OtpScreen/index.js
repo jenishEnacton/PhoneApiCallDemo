@@ -10,7 +10,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {request_user_email_otp} from '../../../Redux/Actions/userAuthActions';
 
 export default function OtpScreen({route, navigation}) {
-  const {otp, mobile} = route?.params;
+  const {otp, mobile, email} = route?.params;
+  console.log(email);
 
   const dispatch = useDispatch();
   const state = useSelector(state => state?.otp?.phone_number);

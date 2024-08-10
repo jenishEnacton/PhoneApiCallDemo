@@ -4,11 +4,15 @@ import * as auth_actions from '../Actions/userAuthActions';
 import api from '../Services/api';
 import {errorToast, sucessToast} from '../../components/core/Toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getUniqueId} from 'react-native-device-info';
+import {navigate} from '../../navigation/Appnavigation';
 
 export function* watch_user_auth_request() {
   yield takeEvery(types.REQUEST_USER_MOBILE_OTP, request_user_mobile_otp);
   yield takeEvery(types.REQUEST_USER_EMAIL_OTP, request_user_email_otp);
   yield takeEvery(types.REQUEST_SOCIAL_LOGIN, request_social_login);
+  yield takeEvery(types.REQUEST_USER_REGISTRATION, request_user_registration);
+  yield takeEvery(types.REQUEST_USER_LOGIN, request_user_login);
 }
 
 function* request_user_mobile_otp(action) {
@@ -114,6 +118,104 @@ function* request_social_login(action) {
   } catch (error) {
     yield put(auth_actions.failed_user_login());
     errorToast('Error!', 'Login request failed');
+    console.log(error);
+  }
+}
+function* request_user_registration(action) {
+  try {
+    const response = yield call(api.user_auth_api, 'auth/register', {
+      email: action.payload.email,
+      password: action.payload.password,
+      device_name: getUniqueId,
+    });
+    console.log(response);
+    if (
+      response.ok &&
+      response.data.success &&
+      response.data.data &&
+      !response.data?.data?.error
+    ) {
+      yield put(auth_actions.success_user_registration(response.data.data));
+      sucessToast('User Register sucessfully');
+      yield AsyncStorage.setItem(
+        'USER_AUTH',
+        JSON.stringify({
+          token: `Bearer ${response.data.data}`,
+        }),
+      );
+      yield AsyncStorage.setItem(
+        'IS_SOCIAL_LOGIN',
+        JSON.stringify({
+          is_social: false,
+        }),
+      );
+      navigate('Home', {email: action.payload.email});
+    } else {
+      if (response.data?.data?.error?.email) {
+        errorToast(response.data?.data?.error?.email[0]);
+      } else if (response.data?.data?.error?.referrer_code) {
+        errorToast(response.data?.data?.error?.referrer_code[0]);
+      } else {
+        errorToast(
+          response.data?.data?.message
+            ? response.data?.data?.message
+            : 'Error!',
+          'Registration request failed',
+        );
+      }
+      yield put(auth_actions.failed_user_registration());
+    }
+  } catch (error) {
+    yield put(auth_actions.failed_user_registration());
+    errorToast('Error!', 'Registration request failed');
+    console.log(error);
+  }
+}
+function* request_user_login(action) {
+  try {
+    const response = yield call(api.user_auth_api, 'auth/login', {
+      email: action.payload.email,
+      password: action.payload.password,
+      device_name: getUniqueId,
+    });
+    console.log('Login Res', response.data.data);
+    if (
+      response.ok &&
+      response.data.success &&
+      response.data.data &&
+      !response.data?.data?.error
+    ) {
+      yield put(auth_actions.success_user_login(response.data.data));
+      sucessToast('Sucess', 'User loggedIn sucessfull');
+      yield AsyncStorage.setItem(
+        'USER_AUTH',
+        JSON.stringify({
+          token: `Bearer ${response.data.data}`,
+        }),
+      );
+      yield AsyncStorage.setItem(
+        'IS_SOCIAL_LOGIN',
+        JSON.stringify({
+          is_social: false,
+        }),
+      );
+      navigate('Home');
+    } else {
+      if (response.data?.data?.error?.email) {
+        errorToast(response.data?.data?.error?.email[0]);
+      } else {
+        errorToast(
+          response.data?.data?.message
+            ? response.data?.data?.message
+            : 'Error!',
+          'Registration request failed',
+        );
+      }
+      yield put(auth_actions.failed_user_login());
+    }
+  } catch (error) {
+    yield put(auth_actions.failed_user_login());
+    errorToast('Error!', 'Registration request failed');
     console.log(error);
   }
 }

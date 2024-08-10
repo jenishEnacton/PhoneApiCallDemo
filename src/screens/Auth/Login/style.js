@@ -36,6 +36,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: COLORS.black,
   },
+  signupview: {
+    flexDirection: 'row',
+    gap: 5,
+  },
+  signup_text: {
+    color: COLORS.secondary,
+  },
 });
 
 module.exports = {

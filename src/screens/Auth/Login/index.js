@@ -1,20 +1,27 @@
-import {Text, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import React, {useRef, useState} from 'react';
 import styles from './style';
 import Header from '../../../components/core/Header';
 import GoogleButton, {GoogleLogin} from '../../../components/core/GoogleButton';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   request_social_login,
   request_user_email_otp,
+  request_user_login,
+  request_user_registration,
 } from '../../../Redux/Actions/userAuthActions';
 import {Field, Formik} from 'formik';
-import {phonenumberschema} from '../../../assets/Utils/validation';
+import {
+  loginValidationSchema,
+  phonenumberschema,
+} from '../../../assets/Utils/validation';
 import CustomeInput from '../../../components/core/TextInput';
 import CButton from '../../../components/core/CButton';
 import {Loader} from '../../../components/core/Loader';
 import {sucessToast} from '../../../components/core/Toast';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
+import Divider from '../../../components/core/Divider';
+import {navigate} from '../../../navigation/Appnavigation';
 
 export default function Login({navigation}) {
   const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +30,8 @@ export default function Login({navigation}) {
   const [isVerified, setIsVerified] = useState(false);
   const formikRef = useRef(null);
   const dispatch = useDispatch();
+  // const signUpToken = useSelector(state => state?.otp?.user_token);
+  // console.log(signUpToken);
 
   const handleGoogleLogin = async () => {
     try {
@@ -71,11 +80,59 @@ export default function Login({navigation}) {
     }
   };
 
+  const handleLogin = async values => {
+    console.log(values);
+    if (values.password && values.email) {
+      dispatch(request_user_login(values.email, values.password));
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Header title={'Google Login'} />
       <View style={styles.inner_container}>
         <GoogleButton onPress={handleGoogleLogin} />
+        <Divider />
+        <Formik
+          innerRef={formikRef}
+          initialValues={{
+            email: '',
+            password: '',
+          }}
+          validationSchema={loginValidationSchema}
+          onSubmit={(values, {resetForm}) => {
+            handleLogin(values);
+            resetForm();
+          }}>
+          {({handleSubmit, isValid}) => (
+            <>
+              <Field
+                component={CustomeInput}
+                name="email"
+                placeholder="Email Address"
+                keyboardType="email-address"
+              />
+              <Field
+                component={CustomeInput}
+                name="password"
+                placeholder="Password"
+                secureTextEntry
+              />
+
+              <CButton
+                title={'Login'}
+                onPress={handleSubmit}
+                disabled={!isValid}
+              />
+              <TouchableOpacity
+                style={styles.signupview}
+                onPress={() => navigation.navigate('Signup')}>
+                <Text>Don’t have an account?</Text>
+                <Text style={styles.signup_text}>SignUp</Text>
+              </TouchableOpacity>
+            </>
+          )}
+        </Formik>
         {generateOtp && (
           <>
             <Text style={styles.otp_title}>Verify OTP</Text>
