@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Switch, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Header from '../../components/core/Header';
 import CButton from '../../components/core/CButton';
@@ -9,9 +9,35 @@ import {
 } from '../../assets/Utils/asyncstorage';
 import {LogoutModal} from '../../components/core/LogoutModal';
 import {COLORS} from '../../assets/Theme/colors';
+import Change_Language from '../../components/core/ChangeLanguage';
+import i18n from '../../translations';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Home({navigation}) {
   const [isVisible, setIsVisible] = useState(false);
+  const [language, setLanguage] = useState(false);
+
+  useEffect(() => {
+    loadLanguage();
+  }, []);
+
+  const loadLanguage = async () => {
+    const storedLanguage = await AsyncStorage.getItem('appLanguage');
+    if (storedLanguage) {
+      i18n.locale = storedLanguage;
+      setLanguage(storedLanguage === 'en' ? false : true);
+    } else {
+      i18n.locale = 'en';
+    }
+  };
+
+  const selectLang = async () => {
+    const newLanguage = language ? 'en' : 'hi';
+    setLanguage(!language);
+    i18n.locale = newLanguage;
+    await AsyncStorage.setItem('appLanguage', newLanguage);
+  };
+
   // const [userInfo, setUserInfo] = useState('');
 
   // useEffect(() => {
@@ -36,19 +62,19 @@ export default function Home({navigation}) {
     <View style={styles.container}>
       <Header title={'Home'} />
       <View style={styles.inner_container}>
-        <Text style={styles.logintitle}>Logged in User</Text>
-        {/* <Text style={styles.usernumber}>{!!userInfo ? userInfo : null}</Text> */}
-        <CButton
-          title={'Log Out'}
-          extrasty={styles.button}
-          onPress={() => setIsVisible(true)}
-        />
-        <LogoutModal
-          visible={isVisible}
-          onRequestClose={() => setIsVisible(false)}
-          onPressLogout={onPressLog}
-        />
+        <Change_Language value={language} onValueChange={selectLang} />
+        <Text>{i18n.t('login')}</Text>
       </View>
+      <CButton
+        title={i18n.t('logout')}
+        extrasty={styles.button}
+        onPress={() => setIsVisible(true)}
+      />
+      <LogoutModal
+        visible={isVisible}
+        onRequestClose={() => setIsVisible(false)}
+        onPressLogout={onPressLog}
+      />
     </View>
   );
 }
@@ -59,9 +85,7 @@ const styles = StyleSheet.create({
   },
   inner_container: {
     flex: 1,
-    justifyContent: 'center',
-    width: '100%',
-    alignItems: 'center',
+    marginHorizontal: 20,
   },
   button: {
     width: '50%',

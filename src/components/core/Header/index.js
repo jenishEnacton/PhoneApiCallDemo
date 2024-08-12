@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 18,
+    marginBottom: 10,
   },
   header_view_noisback: {
     height: 50,
@@ -38,6 +39,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     paddingHorizontal: 18,
+    marginBottom: 10,
   },
   title: {
     color: COLORS.light_primary,
