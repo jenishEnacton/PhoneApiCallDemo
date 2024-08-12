@@ -9,8 +9,15 @@ const styles = StyleSheet.create({
   inner_container: {
     flex: 1,
     justifyContent: 'center',
-    // marginTop: 50,
-    // alignItems: 'center',
+    alignItems: 'center',
+  },
+  signupview: {
+    flexDirection: 'row',
+    gap: 5,
+    alignSelf: 'center',
+  },
+  signup_text: {
+    color: COLORS.secondary,
   },
   otpInput: {
     width: '70%',
@@ -34,22 +41,8 @@ const styles = StyleSheet.create({
     borderColor: COLORS.primary,
   },
   otp_title: {
-    fontSize: 20,
+    fontSize: 15,
     color: COLORS.black,
-  },
-  signupview: {
-    flexDirection: 'row',
-    gap: 5,
-    alignSelf: 'center',
-  },
-  signup_text: {
-    color: COLORS.secondary,
-  },
-  forgot_password: {
-    color: COLORS.secondary,
-    alignSelf: 'flex-end',
-    marginRight: 20,
-    marginBottom: 10,
   },
 });
 

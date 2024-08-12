@@ -1,20 +1,14 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
+import styles from './style';
 import Header from '../../../components/core/Header';
-import {COLORS} from '../../../assets/Theme/colors';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import CButton from '../../../components/core/CButton';
-import {setAsyncData} from '../../../assets/Utils/asyncstorage';
-import {errorToast, sucessToast} from '../../../components/core/Toast';
-import {useDispatch, useSelector} from 'react-redux';
-import {request_user_email_otp} from '../../../Redux/Actions/userAuthActions';
+import {COLORS} from '../../../assets/Theme/colors';
+import {request_forgot_pass_email} from '../../../Redux/Actions/userAuthActions';
 
-export default function OtpScreen({route, navigation}) {
-  const {otp, mobile, email} = route?.params;
-  console.log(email);
-
-  const dispatch = useDispatch();
-  const state = useSelector(state => state?.otp?.phone_number);
+export default function ForgotPassOtp({route, navigation}) {
+  const {email, otp} = route?.params;
 
   const [enterOtp, setEnterOtp] = useState(null);
   const [newOtp, setNewOtp] = useState('');
@@ -37,24 +31,17 @@ export default function OtpScreen({route, navigation}) {
   const handleResendOtp = () => {
     setIsResendDisabled(true);
     setTimer(10);
-
     let min = Math.ceil(1000);
     let max = Math.floor(9999);
     let newOtp = Math.floor(Math.random() * (max - min + 1)) + min;
     setNewOtp(newOtp);
     console.log('Resent OTP', newOtp);
-    dispatch(request_user_email_otp(mobile, newOtp));
+    dispatch(request_forgot_pass_email(email, newOtp));
   };
 
   const onPressVerifyOtp = async () => {
     if (enterOtp == otp || newOtp) {
-      if (state) {
-        await setAsyncData('USERINFO', state).then(res => {
-          sucessToast('Sucess', 'User Verify Sucessfully');
-          setAsyncData('ISverified', (isVerify = true));
-          navigation.navigate('Home');
-        });
-      }
+      navigation.navigate('ChangePassword', {email: email, otp: enterOtp});
     } else {
       errorToast('Error!', 'Please Enter correct OTP');
     }
@@ -62,9 +49,9 @@ export default function OtpScreen({route, navigation}) {
 
   return (
     <View style={styles.container}>
-      <Header title={'Otp Verify'} />
-      <View style={styles.inner_Container}>
-        <Text style={styles.otp_title}>Verify OTP</Text>
+      <Header title={'Verify OTP'} isBack />
+      <View style={styles.inner_container}>
+        <Text style={styles.otp_title}>Enter OTP sent to your email</Text>
         <OTPInputView
           style={styles.otpInput}
           pinCount={4}
@@ -87,40 +74,3 @@ export default function OtpScreen({route, navigation}) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.white,
-  },
-  inner_Container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  otpInput: {
-    width: '70%',
-    height: 200,
-    alignSelf: 'center',
-    marginTop: -50,
-    marginBottom: -40,
-    color: COLORS.black,
-    borderColor: COLORS.black,
-  },
-  underlineStyleBase: {
-    width: 50,
-    height: 45,
-    borderWidth: 2,
-    borderRadius: 5,
-    borderColor: COLORS.black,
-    fontSize: 20,
-    color: COLORS.black,
-  },
-  underlineStyleHighLighted: {
-    borderColor: COLORS.primary,
-  },
-  otp_title: {
-    fontSize: 20,
-    color: COLORS.black,
-  },
-});

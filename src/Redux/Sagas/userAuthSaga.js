@@ -13,6 +13,11 @@ export function* watch_user_auth_request() {
   yield takeEvery(types.REQUEST_SOCIAL_LOGIN, request_social_login);
   yield takeEvery(types.REQUEST_USER_REGISTRATION, request_user_registration);
   yield takeEvery(types.REQUEST_USER_LOGIN, request_user_login);
+  yield takeEvery(types.REQUEST_FORGOT_PASS_EMAIL, request_forgot_pass_email);
+  yield takeEvery(
+    types.REQUEST_FORGOT_CHANGE_PASSWORD,
+    request_forgot_change_password,
+  );
 }
 
 function* request_user_mobile_otp(action) {
@@ -209,6 +214,56 @@ function* request_user_login(action) {
   } catch (error) {
     yield put(auth_actions.failed_user_login());
     errorToast('Error!', 'Registration request failed');
+    console.log(error);
+  }
+}
+function* request_forgot_pass_email(action) {
+  try {
+    const response = yield call(api.user_auth_api, 'auth/password/forgot', {
+      email: action.payload.email,
+      otp: action.payload.forgot_pass_otp,
+    });
+    console.log('Response', response);
+
+    if (response.ok && response.data.success && response.data.data) {
+      yield put(auth_actions.success_forgot_pass_email(response.data.data));
+      sucessToast('Sucess', 'OTP sent to Email');
+    } else {
+      yield put(auth_actions.failed_forgot_pass_email());
+      errorToast(
+        response.data?.data?.message ? response.data?.data?.message : 'Error!',
+        'OTP request failed',
+      );
+    }
+  } catch (error) {
+    yield put(auth_actions.failed_forgot_pass_email());
+    errorToast('Error!', 'Email request Failed');
+    console.log(error);
+  }
+}
+function* request_forgot_change_password(action) {
+  try {
+    const response = yield call(api.user_auth_api, 'auth/password/update', {
+      email: action.payload.email,
+      password: action.payload.password,
+      otp: Number(action.payload.otp),
+    });
+    if (response.ok && response.data.success && response.data.data) {
+      yield put(
+        auth_actions.success_forgot_change_password(response.data.data),
+      );
+      sucessToast('Sucess', 'Password changed Sucessfully');
+      navigate('Login');
+    } else {
+      yield put(auth_actions.failed_forgot_change_password());
+      errorToast(
+        response.data?.data?.message ? response.data?.data?.message : 'Error!',
+        'Change password failed',
+      );
+    }
+  } catch (error) {
+    yield put(auth_actions.failed_forgot_change_password());
+    errorToast('Error!', 'Change Password Failed');
     console.log(error);
   }
 }

@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     alignItems: 'center',
     justifyContent: 'center',
+    alignSelf: 'center',
     backgroundColor: COLORS.white,
     elevation: 10,
     flexDirection: 'row',

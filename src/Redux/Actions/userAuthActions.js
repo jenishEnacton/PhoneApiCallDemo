@@ -98,7 +98,7 @@ export const failed_user_login = () => ({
   },
 });
 
-export const request_user_registration = (email, password, mobile) => ({
+export const request_user_registration = (email, password) => ({
   type: types.REQUEST_USER_REGISTRATION,
   payload: {
     email,
@@ -117,5 +117,50 @@ export const failed_user_registration = () => ({
   type: types.FAILED_USER_REGISTRATION,
   payload: {
     user_token: '',
+  },
+});
+
+export const request_forgot_pass_email = (email, forgot_pass_otp) => ({
+  type: types.REQUEST_FORGOT_PASS_EMAIL,
+  payload: {
+    email,
+    forgot_pass_otp,
+  },
+});
+
+export const success_forgot_pass_email = data => ({
+  type: types.SUCCESS_FORGOT_PASS_EMAIL,
+  payload: {
+    forgot_pass_email: data,
+  },
+});
+
+export const failed_forgot_pass_email = () => ({
+  type: types.FAILED_FORGOT_PASS_EMAIL,
+  payload: {
+    forgot_pass_email: false,
+  },
+});
+
+export const request_forgot_change_password = (email, password, otp) => ({
+  type: types.REQUEST_FORGOT_CHANGE_PASSWORD,
+  payload: {
+    email,
+    password,
+    otp,
+  },
+});
+
+export const success_forgot_change_password = data => ({
+  type: types.SUCCESS_FORGOT_CHANGE_PASSWORD,
+  payload: {
+    changePass: data,
+  },
+});
+
+export const failed_forgot_change_password = () => ({
+  type: types.FAILED_FORGOT_CHANGE_PASSWORD,
+  payload: {
+    changePass: false,
   },
 });

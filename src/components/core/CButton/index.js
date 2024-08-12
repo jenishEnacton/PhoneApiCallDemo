@@ -20,6 +20,8 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 20,
     marginVertical: 10,
+    width: '70%',
+    alignSelf: 'center',
   },
   btntitle: {
     color: COLORS.black,

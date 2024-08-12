@@ -86,7 +86,7 @@ export default function Login({navigation}) {
     }
   };
 
-  const handleLogin = async values => {
+  const handleLogin = values => {
     console.log(values);
     if (values.password && values.email) {
       dispatch(request_user_login(values.email, values.password));
@@ -120,6 +120,8 @@ export default function Login({navigation}) {
       })
       .catch(e => console.log(e));
   }
+
+  const onPressForgotPass = () => navigation.navigate('ForgotPassword');
 
   return (
     <View style={styles.container}>
@@ -166,7 +168,9 @@ export default function Login({navigation}) {
                 placeholder="Password"
                 secureTextEntry
               />
-
+              <TouchableOpacity onPress={onPressForgotPass}>
+                <Text style={styles.forgot_password}>Forgot Password?</Text>
+              </TouchableOpacity>
               <CButton
                 title={'Login'}
                 onPress={handleSubmit}

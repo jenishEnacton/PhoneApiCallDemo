@@ -41,10 +41,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     width: '90%',
     fontSize: 20,
+    alignSelf: 'center',
   },
   errorText: {
-    fontSize: 10,
+    fontSize: 12,
     color: 'red',
+    alignSelf: 'flex-end',
+    marginRight: 20,
   },
   errorInput: {
     borderColor: 'red',

@@ -6,6 +6,9 @@ import Home from '../screens/Home';
 import SplashScreen from '../screens/SplashScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import Signup from '../screens/Auth/Signup';
+import ForgotPassword from '../screens/Auth/ForgotPassword';
+import ForgotPassOtp from '../screens/Auth/ForgotPassword/ForgotPassOtp';
+import ChangePassword from '../screens/Auth/ChangePass]word';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +39,9 @@ export const Appnavigation = () => {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="Signup" component={Signup} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+        <Stack.Screen name="ForgotPassOtp" component={ForgotPassOtp} />
+        <Stack.Screen name="ChangePassword" component={ChangePassword} />
       </Stack.Navigator>
     </NavigationContainer>
   );

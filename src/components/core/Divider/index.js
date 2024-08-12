@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+    alignSelf: 'center',
   },
   divider: {
     borderWidth: 0.2,
