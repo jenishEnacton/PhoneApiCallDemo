@@ -7,7 +7,8 @@ const i18n = new I18n({
   hi: hi,
 });
 
-i18n.defaultLocale = 'en';
-i18n.locale = 'en';
+export const trasnlate = val => {
+  return i18n.t(val);
+};
 
 export default i18n;

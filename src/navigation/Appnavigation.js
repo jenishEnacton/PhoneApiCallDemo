@@ -9,6 +9,7 @@ import Signup from '../screens/Auth/Signup';
 import ForgotPassword from '../screens/Auth/ForgotPassword';
 import ForgotPassOtp from '../screens/Auth/ForgotPassword/ForgotPassOtp';
 import ChangePassword from '../screens/Auth/ChangePass]word';
+import Home2 from '../screens/Home/Home2';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,9 +28,10 @@ export const Appnavigation = () => {
   return (
     <NavigationContainer
       ref={navigationRef}
-      onReady={() => {
-        isReadyRef.current = true;
-      }}>
+      // onReady={() => {
+      //   isReadyRef.current = true;
+      // }}
+    >
       <Stack.Navigator
         headerMode="none"
         screenOptions={{headerShown: false}}
@@ -42,6 +44,7 @@ export const Appnavigation = () => {
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="ForgotPassOtp" component={ForgotPassOtp} />
         <Stack.Screen name="ChangePassword" component={ChangePassword} />
+        <Stack.Screen name="Home2" component={Home2} />
       </Stack.Navigator>
     </NavigationContainer>
   );

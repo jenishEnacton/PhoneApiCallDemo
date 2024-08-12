@@ -10,7 +10,7 @@ import {
 import {LogoutModal} from '../../components/core/LogoutModal';
 import {COLORS} from '../../assets/Theme/colors';
 import Change_Language from '../../components/core/ChangeLanguage';
-import i18n from '../../translations';
+import i18n, {trasnlate} from '../../translations';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Home({navigation}) {
@@ -34,7 +34,7 @@ export default function Home({navigation}) {
   const selectLang = async () => {
     const newLanguage = language ? 'en' : 'hi';
     setLanguage(!language);
-    i18n.locale = newLanguage;
+    i18n.locale = newLanguage ? newLanguage : 'en';
     await AsyncStorage.setItem('appLanguage', newLanguage);
   };
 
@@ -63,10 +63,11 @@ export default function Home({navigation}) {
       <Header title={'Home'} />
       <View style={styles.inner_container}>
         <Change_Language value={language} onValueChange={selectLang} />
-        <Text>{i18n.t('login')}</Text>
+        <Text>{trasnlate('login')}</Text>
       </View>
+      <CButton title={'Next'} onPress={() => navigation.navigate('Home2')} />
       <CButton
-        title={i18n.t('logout')}
+        title={trasnlate('logout')}
         extrasty={styles.button}
         onPress={() => setIsVisible(true)}
       />

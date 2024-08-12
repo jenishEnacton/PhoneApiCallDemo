@@ -6,6 +6,7 @@ import {errorToast, sucessToast} from '../../components/core/Toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getUniqueId} from 'react-native-device-info';
 import {navigate} from '../../navigation/Appnavigation';
+import {trasnlate} from '../../translations';
 
 export function* watch_user_auth_request() {
   yield takeEvery(types.REQUEST_USER_MOBILE_OTP, request_user_mobile_otp);
@@ -30,7 +31,7 @@ function* request_user_mobile_otp(action) {
     console.log('API response:', response.data);
     if (response.ok && response.data.success && response.data.data) {
       yield put(auth_actions.success_user_mobile_otp(response.data.data));
-      sucessToast('Sucess', 'OTP Sent to Mobile Please wait');
+      sucessToast(trasnlate('sucess'), 'OTP Sent to Mobile Please wait');
     } else {
       yield put(auth_actions.failed_user_mobile_otp());
       errorToast('Error!', 'Otp Request Failed');
@@ -52,7 +53,7 @@ function* request_user_email_otp(action) {
     console.log('API response:', response.data);
     if (response.ok && response.data.success && response.data.data) {
       yield put(auth_actions.success_user_email_otp(response.data.data));
-      sucessToast('Sucess', 'OTP Sent to Email Please wait');
+      sucessToast(trasnlate('sucess'), 'OTP Sent to Email Please wait');
     } else {
       yield put(auth_actions.failed_user_email_otp());
       errorToast('Error!', 'Otp Request Failed');
@@ -85,7 +86,7 @@ function* request_social_login(action) {
       console.log('social login', response);
       if (response.ok && response.data.success && response.data) {
         yield put(auth_actions.success_user_login(response.data.data));
-        sucessToast('Sucess', 'Login Success');
+        sucessToast(trasnlate('sucess'), 'Login Success');
         yield AsyncStorage.setItem(
           'USER_AUTH',
           JSON.stringify({
@@ -134,7 +135,7 @@ function* request_user_registration(action) {
       !response.data?.data?.error
     ) {
       yield put(auth_actions.success_user_registration(response.data.data));
-      sucessToast('User Register sucessfully');
+      sucessToast(trasnlate('sucess'), 'User Register sucessfully');
       yield AsyncStorage.setItem(
         'USER_AUTH',
         JSON.stringify({
@@ -184,7 +185,7 @@ function* request_user_login(action) {
       !response.data?.data?.error
     ) {
       yield put(auth_actions.success_user_login(response.data.data));
-      sucessToast('Sucess', 'User loggedIn sucessfull');
+      sucessToast(trasnlate('sucess'), 'User loggedIn sucessfull');
       yield AsyncStorage.setItem(
         'USER_AUTH',
         JSON.stringify({
@@ -252,7 +253,7 @@ function* request_forgot_change_password(action) {
       yield put(
         auth_actions.success_forgot_change_password(response.data.data),
       );
-      sucessToast('Sucess', 'Password changed Sucessfully');
+      sucessToast(trasnlate('sucess'), 'Password changed Sucessfully');
       navigate('Login');
     } else {
       yield put(auth_actions.failed_forgot_change_password());
