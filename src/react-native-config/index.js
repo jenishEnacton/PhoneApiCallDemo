@@ -8,5 +8,6 @@ const config = {
     '1040952400715-d88v8esfrge3tuhgea6ikqcp433h84i4.apps.googleusercontent.com',
   IOS_CLIENT_ID:
     '1040952400715-9c5qeakj2kk1qcs7vng36lksmf7d026v.apps.googleusercontent.com',
+  EMPTY_IMAGE_URL: 'https://laraback.enactweb.com/images/blank.png',
 };
 export default config;

@@ -1,11 +1,10 @@
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import {COLORS, get_bg_color} from '../../assets/Theme/colors';
-import StoreCard from '../../components/Generic/storeCard';
-import {Image} from 'react-native';
+import StoreCouponCard from '../../components/Generic/storeCuponCard';
 import config from '../../react-native-config';
 
-export default function HomeTopStore(props) {
+export default function HomeDealCard(props) {
   const {item} = props;
 
   const [selectedCategory, setSelectedCategory] = useState(
@@ -43,20 +42,20 @@ export default function HomeTopStore(props) {
     category => category.name === selectedCategory,
   );
 
-  const stores = selectedCategoryData ? selectedCategoryData.stores : [];
+  const stores = selectedCategoryData ? selectedCategoryData.deals : [];
 
   const renderStoreCard = ({item, index}) => {
     return (
-      <StoreCard
-        title={item.name ? item.name : 'No Title'}
-        bgColor={get_bg_color(index, 2)}
-        url={item.logo ? item.logo : config.EMPTY_IMAGE_URL}
+      <StoreCouponCard
+        title={item.title ? item.title : 'No title'}
+        bgColor={get_bg_color(index, 4)}
+        url={item.image ? item.image : config.EMPTY_IMAGE_URL}
       />
     );
   };
 
   const EmptystoreCard = () => {
-    return <StoreCard title={'No Data'} />;
+    return <StoreCouponCard title={'No Data'} />;
   };
 
   return (

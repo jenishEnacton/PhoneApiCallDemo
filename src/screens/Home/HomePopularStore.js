@@ -1,7 +1,8 @@
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
-import {COLORS} from '../../assets/Theme/colors';
+import {COLORS, get_bg_color} from '../../assets/Theme/colors';
 import StoreCard from '../../components/Generic/storeCard';
+import config from '../../react-native-config';
 
 export default function HomePopularStore(props) {
   const {item} = props;
@@ -43,8 +44,14 @@ export default function HomePopularStore(props) {
 
   const stores = selectedCategoryData ? selectedCategoryData.stores : [];
 
-  const renderStoreCard = ({item}) => {
-    return <StoreCard title={item.name} />;
+  const renderStoreCard = ({item, index}) => {
+    return (
+      <StoreCard
+        title={item.name ? item.name : 'No Title'}
+        bgColor={get_bg_color(index, 2)}
+        url={item.logo ? item.logo : config.EMPTY_IMAGE_URL}
+      />
+    );
   };
 
   const EmptystoreCard = () => {
@@ -88,6 +95,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: 'bold',
     color: COLORS.black,
-    width: 150,
+    width: 120,
   },
 });

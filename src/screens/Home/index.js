@@ -1,18 +1,20 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Header from '../../components/core/Header';
 import {COLORS} from '../../assets/Theme/colors';
 import Change_Language from '../../components/core/ChangeLanguage';
 import i18n, {trasnlate} from '../../translations';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {connect, useDispatch, useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {request_home_screenData} from '../../Redux/Actions/publicData';
 import {getHomeScreenData} from '../../Redux/Selectors/publicHomeData';
 import {CLoader} from '../../components/core/CLoader';
 import HomeTopStore from './HomeTopStore';
 import HomePopularStore from './HomePopularStore';
+import HomeCouponCard from './HomeCouponCard';
+import HomeDealCard from './HomeDealCard';
 
-function Home({navigation}) {
+function Home() {
   const [language, setLanguage] = useState(false);
   const dispatch = useDispatch();
   const data = useSelector(getHomeScreenData);
@@ -42,12 +44,15 @@ function Home({navigation}) {
 
   const renderCategory = ({item, index}) => {
     let newData = Object.values(item);
-
     switch (newData[0].blockName) {
       case 'procash/featured-stores':
         return <HomeTopStore item={newData[0]} />;
       case 'procash/top-stores':
         return <HomePopularStore item={newData[0]} />;
+      case 'procash/top-offers':
+        return <HomeCouponCard item={newData[0]} />;
+      case 'procash/top-deals':
+        return <HomeDealCard item={newData[0]} />;
       default:
         break;
     }
@@ -70,7 +75,11 @@ function Home({navigation}) {
         }
       />
       <View style={styles.inner_container}>
-        <FlatList data={data} renderItem={renderCategory} />
+        <FlatList
+          data={data}
+          renderItem={renderCategory}
+          showsVerticalScrollIndicator={false}
+        />
       </View>
       {loading && <CLoader />}
     </View>
@@ -82,7 +91,7 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.home_bg,
   },
   inner_container: {
     flex: 1,
