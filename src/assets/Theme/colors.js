@@ -5,4 +5,6 @@ export const COLORS = {
   white: '#fff',
   black: '#000',
   dark: '#19122e',
+  track: '#F7EFE5',
+  card: '#707070',
 };

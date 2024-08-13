@@ -6,18 +6,20 @@ import {useNavigation} from '@react-navigation/native';
 
 export default function Header(props) {
   const navigation = useNavigation();
-  const {title, isBack} = props;
+  const {title, isBack, component} = props;
   return (
-    <View style={isBack ? styles.header_view : styles.header_view_noisback}>
-      {isBack && (
+    <View style={styles.header_view}>
+      {isBack ? (
         <Icons.AntDesign
           name="left"
           style={styles.back_icon}
           onPress={() => navigation.goBack()}
         />
+      ) : (
+        <View style={styles.is_backnot} />
       )}
-      <Text style={isBack ? styles.title : styles.no_backtitle}>{title}</Text>
-      <View style={styles.empty_view} />
+      <Text style={styles.title}>{title}</Text>
+      <View style={styles.empty_view}>{component}</View>
     </View>
   );
 }
@@ -32,24 +34,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     marginBottom: 10,
   },
-  header_view_noisback: {
-    height: 50,
-    backgroundColor: COLORS.primary,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingHorizontal: 18,
-    marginBottom: 10,
-  },
   title: {
     color: COLORS.light_primary,
     fontSize: 20,
-    fontWeight: 'bold',
-  },
-  no_backtitle: {
-    color: COLORS.light_primary,
-    fontSize: 20,
-    marginLeft: 18,
     fontWeight: 'bold',
   },
   back_icon: {
@@ -57,6 +44,10 @@ const styles = StyleSheet.create({
     color: COLORS.white,
   },
   empty_view: {
+    height: 23,
+    width: 23,
+  },
+  is_backnot: {
     height: 23,
     width: 23,
   },

@@ -52,7 +52,7 @@ export default function OtpScreen({route, navigation}) {
         await setAsyncData('USERINFO', state).then(res => {
           sucessToast('Sucess', 'User Verify Sucessfully');
           setAsyncData('ISverified', (isVerify = true));
-          navigation.navigate('Home');
+          navigation.navigate('TabNavigation');
         });
       }
     } else {

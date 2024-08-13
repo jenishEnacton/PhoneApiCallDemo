@@ -1,25 +1,27 @@
-import {StyleSheet, Switch, Text, View} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Header from '../../components/core/Header';
-import CButton from '../../components/core/CButton';
-import {
-  clearAsyncData,
-  getAsyncData,
-  setAsyncData,
-} from '../../assets/Utils/asyncstorage';
-import {LogoutModal} from '../../components/core/LogoutModal';
 import {COLORS} from '../../assets/Theme/colors';
 import Change_Language from '../../components/core/ChangeLanguage';
 import i18n, {trasnlate} from '../../translations';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {connect, useDispatch, useSelector} from 'react-redux';
+import {request_home_screenData} from '../../Redux/Actions/publicData';
+import {getHomeScreenData} from '../../Redux/Selectors/publicHomeData';
+import {CLoader} from '../../components/core/CLoader';
+import HomeTopStore from './HomeTopStore';
+import HomePopularStore from './HomePopularStore';
 
-export default function Home({navigation}) {
-  const [isVisible, setIsVisible] = useState(false);
+function Home({navigation}) {
   const [language, setLanguage] = useState(false);
+  const dispatch = useDispatch();
+  const data = useSelector(getHomeScreenData);
+  const loading = useSelector(state => state.params.loading);
 
   useEffect(() => {
     loadLanguage();
-  }, []);
+    dispatch(request_home_screenData());
+  }, [dispatch]);
 
   const loadLanguage = async () => {
     const storedLanguage = await AsyncStorage.getItem('appLanguage');
@@ -38,51 +40,49 @@ export default function Home({navigation}) {
     await AsyncStorage.setItem('appLanguage', newLanguage);
   };
 
-  // const [userInfo, setUserInfo] = useState('');
+  const renderCategory = ({item, index}) => {
+    let newData = Object.values(item);
 
-  // useEffect(() => {
-  //   getUserInfo();
-  // }, []);
-
-  // const getUserInfo = async () => {
-  //   console.log('Get User');
-  //   let data = await getAsyncData('USERINFO');
-  //   setUserInfo(data);
-  // };
-
-  const onPressLog = async () => {
-    await setAsyncData('ISverified', (isVerify = false));
-    clearAsyncData('USER_AUTH');
-    // clearAsyncData('USERINFO');
-    navigation.navigate('Login');
-    setIsVisible(false);
+    switch (newData[0].blockName) {
+      case 'procash/featured-stores':
+        return <HomeTopStore item={newData[0]} />;
+      case 'procash/top-stores':
+        return <HomePopularStore item={newData[0]} />;
+      default:
+        break;
+    }
   };
 
   return (
     <View style={styles.container}>
-      <Header title={'Home'} />
+      <Header
+        title={'Home'}
+        component={
+          <Change_Language
+            value={language}
+            onValueChange={selectLang}
+            trackColor={{
+              true: COLORS.track,
+              false: COLORS.track,
+            }}
+            thumbColor={COLORS.secondary}
+          />
+        }
+      />
       <View style={styles.inner_container}>
-        <Change_Language value={language} onValueChange={selectLang} />
-        <Text>{trasnlate('login')}</Text>
+        <FlatList data={data} renderItem={renderCategory} />
       </View>
-      <CButton title={'Next'} onPress={() => navigation.navigate('Home2')} />
-      <CButton
-        title={trasnlate('logout')}
-        extrasty={styles.button}
-        onPress={() => setIsVisible(true)}
-      />
-      <LogoutModal
-        visible={isVisible}
-        onRequestClose={() => setIsVisible(false)}
-        onPressLogout={onPressLog}
-      />
+      {loading && <CLoader />}
     </View>
   );
 }
 
+export default Home;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: COLORS.white,
   },
   inner_container: {
     flex: 1,
@@ -103,3 +103,47 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
 });
+
+// const [isVisible, setIsVisible] = useState(false);
+{
+  /* <CButton title={'Next'} onPress={() => navigation.navigate('Profile')} /> */
+}
+{
+  /* <CButton
+  title={trasnlate('logout')}
+  extrasty={styles.button}
+  onPress={() => setIsVisible(true)}
+  /> */
+}
+{
+  /* <LogoutModal
+        visible={isVisible}
+        onRequestClose={() => setIsVisible(false)}
+        onPressLogout={onPressLog}
+      /> */
+}
+// const [userInfo, setUserInfo] = useState('');
+
+// useEffect(() => {
+//   getUserInfo();
+// }, []);
+
+// const getUserInfo = async () => {
+//   console.log('Get User');
+//   let data = await getAsyncData('USERINFO');
+//   setUserInfo(data);
+// };
+
+// const onPressLog = async () => {
+//   await setAsyncData('ISverified', (isVerify = false));
+//   clearAsyncData('USER_AUTH');
+//   // clearAsyncData('USERINFO');
+//   navigation.navigate('Login');
+//   setIsVisible(false);
+// };
+// import {
+//   clearAsyncData,
+//   getAsyncData,
+//   setAsyncData,
+// } from '../../assets/Utils/asyncstorage';
+// import {LogoutModal} from '../../components/core/LogoutModal';

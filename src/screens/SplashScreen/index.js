@@ -27,7 +27,7 @@ export default function SplashScreen({navigation}) {
     let isVerified = await getAsyncData('ISverified');
     let isToken = await getAsyncData('USER_AUTH');
     if (isVerified === true || isToken) {
-      navigation.navigate('Home');
+      navigation.replace('TabNavigation');
     } else {
       navigation.replace('Login');
     }

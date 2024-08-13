@@ -8,6 +8,10 @@ export const rootApi = apisauce.create({
   },
 });
 
+const publicAPI = url => {
+  return rootApi.get(url);
+};
+
 // const user_auth_api = (url, body, header) => {
 //   return new Promise((resolve, reject) => {
 //     rootApi.get(config.API_URL + '/auth/csrf-token').then(res => {
@@ -64,6 +68,7 @@ export const userFbLogin = token => {
 
 const api = {
   user_auth_api,
+  publicAPI,
 };
 
 export default api;

@@ -3,7 +3,7 @@ import React from 'react';
 import {COLORS} from '../../assets/Theme/colors';
 import {trasnlate} from '../../translations';
 
-export default function Home2() {
+export default function Profile() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{trasnlate('login')}</Text>

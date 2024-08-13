@@ -56,3 +56,13 @@ export const ChangePasswordSchema = yup.object().shape({
     .oneOf([yup.ref('password')], 'Passwords do not match')
     .required('Confirm password is required'),
 });
+
+export const formatString = str => {
+  const extractedPart = str.split('/')[1];
+
+  const withSpaces = extractedPart.replace(/-/g, ' ');
+
+  const capitalized = withSpaces.replace(/\b\w/g, char => char.toUpperCase());
+
+  return capitalized;
+};
