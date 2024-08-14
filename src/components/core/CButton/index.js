@@ -3,13 +3,14 @@ import React from 'react';
 import {COLORS} from '../../../assets/Theme/colors';
 
 export default function CButton(props) {
-  let {title, onPress, extrasty, disabled} = props;
+  let {title, onPress, extrasty, disabled, extra_title_sty, borderRadius} =
+    props;
   return (
     <TouchableOpacity
-      style={[styles.container, extrasty]}
+      style={[styles.container, extrasty, {borderRadius: borderRadius}]}
       onPress={onPress}
       disabled={disabled}>
-      <Text style={styles.btntitle}>{title}</Text>
+      <Text style={[styles.btntitle, extra_title_sty]}>{title}</Text>
     </TouchableOpacity>
   );
 }

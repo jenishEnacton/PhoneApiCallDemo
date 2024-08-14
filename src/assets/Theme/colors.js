@@ -8,6 +8,8 @@ export const COLORS = {
   track: '#F7EFE5',
   card: '#707070',
   home_bg: '#F0F0F0',
+  gradient_secondary: '#BE5532',
+  green_approved: '#14A235',
 };
 
 const COLORS_SETS = {

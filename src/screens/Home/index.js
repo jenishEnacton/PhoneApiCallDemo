@@ -1,4 +1,4 @@
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Header from '../../components/core/Header';
 import {COLORS} from '../../assets/Theme/colors';
@@ -13,6 +13,10 @@ import HomeTopStore from './HomeTopStore';
 import HomePopularStore from './HomePopularStore';
 import HomeCouponCard from './HomeCouponCard';
 import HomeDealCard from './HomeDealCard';
+import RNRestart from 'react-native-restart';
+import HomeCategoryCard from './HomeCategoryCard';
+import GradientFooter from '../../components/Generic/GradientFooter';
+import {AppImages} from '../../assets/images';
 
 function Home() {
   const [language, setLanguage] = useState(false);
@@ -40,6 +44,7 @@ function Home() {
     setLanguage(!language);
     i18n.locale = newLanguage ? newLanguage : 'en';
     await AsyncStorage.setItem('appLanguage', newLanguage);
+    RNRestart.Restart();
   };
 
   const renderCategory = ({item, index}) => {
@@ -53,6 +58,8 @@ function Home() {
         return <HomeCouponCard item={newData[0]} />;
       case 'procash/top-deals':
         return <HomeDealCard item={newData[0]} />;
+      case 'procash/categories':
+        return <HomeCategoryCard item={newData[0]} />;
       default:
         break;
     }
@@ -74,13 +81,25 @@ function Home() {
           />
         }
       />
-      <View style={styles.inner_container}>
+      <ScrollView
+        style={styles.inner_container}
+        showsVerticalScrollIndicator={false}>
         <FlatList
+          style={styles.home_list}
           data={data}
           renderItem={renderCategory}
           showsVerticalScrollIndicator={false}
+          scrollEnabled={false}
         />
-      </View>
+        {!loading && (
+          <GradientFooter
+            main_title={trasnlate('gradient_subtitle')}
+            sub_title={trasnlate('gradient_maintitle')}
+            btn_title={trasnlate('refer_and_earn')}
+            source={AppImages.home_footer_img}
+          />
+        )}
+      </ScrollView>
       {loading && <CLoader />}
     </View>
   );
@@ -95,7 +114,10 @@ const styles = StyleSheet.create({
   },
   inner_container: {
     flex: 1,
-    marginHorizontal: 20,
+  },
+  home_list: {
+    width: '95%',
+    alignSelf: 'center',
   },
   button: {
     width: '50%',
