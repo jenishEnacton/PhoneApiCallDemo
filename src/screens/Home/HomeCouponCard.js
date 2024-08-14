@@ -1,7 +1,6 @@
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import {COLORS, get_bg_color} from '../../assets/Theme/colors';
-import StoreCard from '../../components/Generic/storeCard';
 import StoreCouponCard from '../../components/Generic/storeCuponCard';
 import config from '../../react-native-config';
 
@@ -56,7 +55,7 @@ export default function HomeCouponCard(props) {
   };
 
   const EmptystoreCard = () => {
-    return <StoreCouponCard title={'No Data'} />;
+    return <StoreCouponCard title={'No Data'} url={config.EMPTY_IMAGE_URL} />;
   };
 
   return (

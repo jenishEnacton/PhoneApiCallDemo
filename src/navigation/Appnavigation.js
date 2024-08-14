@@ -4,7 +4,7 @@ import Login from '../screens/Auth/Login/index';
 import OtpScreen from '../screens/Auth/OtpScreen';
 import Home from '../screens/Home';
 import SplashScreen from '../screens/SplashScreen';
-import {NavigationContainer} from '@react-navigation/native';
+import {CommonActions, NavigationContainer} from '@react-navigation/native';
 import Signup from '../screens/Auth/Signup';
 import ForgotPassword from '../screens/Auth/ForgotPassword';
 import ForgotPassOtp from '../screens/Auth/ForgotPassword/ForgotPassOtp';
@@ -17,6 +17,10 @@ const Stack = createNativeStackNavigator();
 
 export const navigationRef = React.createRef();
 export const isReadyRef = React.createRef();
+
+export function reset(...args) {
+  navigationRef.current?.dispatch(CommonActions.reset(...args));
+}
 
 export function navigate(name, params) {
   if (isReadyRef.current && navigationRef.current) {

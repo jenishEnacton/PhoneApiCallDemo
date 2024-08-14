@@ -7,6 +7,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getUniqueId} from 'react-native-device-info';
 import {navigate} from '../../navigation/Appnavigation';
 import {trasnlate} from '../../translations';
+import {clearAsyncData} from '../../assets/Utils/asyncstorage';
+import {reset} from 'i18n-js';
 
 export function* watch_user_auth_request() {
   yield takeEvery(types.REQUEST_USER_MOBILE_OTP, request_user_mobile_otp);
@@ -19,6 +21,7 @@ export function* watch_user_auth_request() {
     types.REQUEST_FORGOT_CHANGE_PASSWORD,
     request_forgot_change_password,
   );
+  yield takeEvery(types.REQUEST_LOG_OUT, request_log_out);
 }
 
 function* request_user_mobile_otp(action) {
@@ -198,7 +201,7 @@ function* request_user_login(action) {
           is_social: false,
         }),
       );
-      navigate('TabNavigation');
+      navigate('Home');
     } else {
       if (response.data?.data?.error?.email) {
         errorToast(response.data?.data?.error?.email[0]);
@@ -265,6 +268,27 @@ function* request_forgot_change_password(action) {
   } catch (error) {
     yield put(auth_actions.failed_forgot_change_password());
     errorToast('Error!', 'Change Password Failed');
+    console.log(error);
+  }
+}
+function* request_log_out() {
+  try {
+    const response = yield call(api.user_auth_api, 'user/logout', {
+      device_name: getUniqueId,
+    });
+    console.log('Response', response?.data?.data);
+    if (response.ok && response.data.success && response.data.data) {
+      yield put(auth_actions.success_log_out());
+      sucessToast('Sucess', 'log_out_successfully');
+      reset('Login');
+      yield clearAsyncData('USER_AUTH');
+    } else {
+      yield put(auth_actions.failed_log_out());
+      errorToast('error', 'request failed');
+    }
+  } catch (error) {
+    yield put(auth_actions.failed_log_out());
+    errorToast('error', 'request failed');
     console.log(error);
   }
 }

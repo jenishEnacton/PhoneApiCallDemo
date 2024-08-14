@@ -17,6 +17,8 @@ import RNRestart from 'react-native-restart';
 import HomeCategoryCard from './HomeCategoryCard';
 import GradientFooter from '../../components/Generic/GradientFooter';
 import {AppImages} from '../../assets/images';
+import HomeImageCard from './HomeImageCard';
+import HomeSlider from './HomeSlider';
 
 function Home() {
   const [language, setLanguage] = useState(false);
@@ -58,8 +60,12 @@ function Home() {
         return <HomeCouponCard item={newData[0]} />;
       case 'procash/top-deals':
         return <HomeDealCard item={newData[0]} />;
+      case 'procash/image-component':
+        return <HomeImageCard item={newData[0]} />;
       case 'procash/categories':
         return <HomeCategoryCard item={newData[0]} />;
+      case 'procash/slider':
+        return <HomeSlider item={newData[0]} />;
       default:
         break;
     }

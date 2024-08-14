@@ -6,10 +6,12 @@ import {Field, Formik} from 'formik';
 import CustomeInput from '../../../components/core/TextInput/index.js';
 import CButton from '../../../components/core/CButton/index.js';
 import {ChangePasswordSchema} from '../../../assets/Utils/validation.js';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {request_forgot_change_password} from '../../../Redux/Actions/userAuthActions.js';
+import {Loader} from '../../../components/core/Loader/index.js';
 
 export default function ChangePassword({route}) {
+  const loading = useSelector(state => state?.params.loading);
   const {email, otp} = route?.params;
   console.log(email);
   console.log(otp);
@@ -55,12 +57,13 @@ export default function ChangePassword({route}) {
                 title={'Change Password'}
                 onPress={handleSubmit}
                 disabled={!isValid}
+                borderRadius={20}
               />
             </>
           )}
         </Formik>
       </View>
-      <Text>index</Text>
+      {loading && <Loader />}
     </View>
   );
 }

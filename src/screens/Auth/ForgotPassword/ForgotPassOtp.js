@@ -6,8 +6,11 @@ import OTPInputView from '@twotalltotems/react-native-otp-input';
 import CButton from '../../../components/core/CButton';
 import {COLORS} from '../../../assets/Theme/colors';
 import {request_forgot_pass_email} from '../../../Redux/Actions/userAuthActions';
+import {useSelector} from 'react-redux';
+import {Loader} from '../../../components/core/Loader';
 
 export default function ForgotPassOtp({route, navigation}) {
+  const loading = useSelector(state => state?.params.loading);
   const {email, otp} = route?.params;
 
   const [enterOtp, setEnterOtp] = useState(null);
@@ -62,7 +65,12 @@ export default function ForgotPassOtp({route, navigation}) {
             setEnterOtp(code);
           }}
         />
-        <CButton title={'Verify'} onPress={onPressVerifyOtp} disabled={!otp} />
+        <CButton
+          title={'Verify'}
+          onPress={onPressVerifyOtp}
+          disabled={!otp}
+          borderRadius={20}
+        />
         {isResendDisabled && (
           <Text
             style={{fontSize: 15, color: COLORS.black}}>{`${timer} s`}</Text>
@@ -71,6 +79,7 @@ export default function ForgotPassOtp({route, navigation}) {
           <Text>{'Resend OTP'}</Text>
         </TouchableOpacity>
       </View>
+      {loading && <Loader />}
     </View>
   );
 }

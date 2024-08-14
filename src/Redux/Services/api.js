@@ -9,6 +9,7 @@ export const rootApi = apisauce.create({
 });
 
 const publicAPI = url => {
+  console.log('Api Called');
   return rootApi.get(url);
 };
 

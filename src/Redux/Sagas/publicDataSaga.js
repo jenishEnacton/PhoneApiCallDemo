@@ -14,7 +14,7 @@ function* request_home_screenData() {
       api.publicAPI,
       config.API_URL + config.PUBLIC_PREFIX + '/apphome',
     );
-    // console.log('res Home', Object.values(response.data?.data));
+    console.log('Response', response?.data?.data);
     if (
       response.ok &&
       response.data.success &&

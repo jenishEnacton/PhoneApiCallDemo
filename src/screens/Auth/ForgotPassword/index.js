@@ -7,10 +7,12 @@ import CustomeInput from '../../../components/core/TextInput';
 import {ForgotPassvalidation} from '../../../assets/Utils/validation';
 import CButton from '../../../components/core/CButton';
 import {COLORS} from '../../../assets/Theme/colors';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {request_forgot_pass_email} from '../../../Redux/Actions/userAuthActions';
+import {Loader} from '../../../components/core/Loader';
 
 export default function ForgotPassword({navigation}) {
+  const loading = useSelector(state => state?.params.loading);
   const formikRef = useRef(null);
   const dispatch = useDispatch();
 
@@ -53,6 +55,7 @@ export default function ForgotPassword({navigation}) {
                 title={'Send OTP'}
                 onPress={handleSubmit}
                 disabled={!isValid}
+                borderRadius={20}
               />
               <TouchableOpacity
                 style={styles.signupview}
@@ -64,6 +67,7 @@ export default function ForgotPassword({navigation}) {
           )}
         </Formik>
       </View>
+      {loading && <Loader />}
     </View>
   );
 }

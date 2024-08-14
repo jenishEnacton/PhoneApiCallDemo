@@ -2,7 +2,11 @@
   "login": "Login",
   "logout": "Logout",
   "sucess": "Sucess",
+  "profile": "User Profile",
+  "log_out": "Logout",
   "refer_and_earn": "Refer & Earn Now",
   "gradient_maintitle": "Every. Single. Time",
-  "gradient_subtitle": "Invite Friends & Get 25% Cashback for Life!"
+  "gradient_subtitle": "Invite Friends & Get 25% Cashback for Life!",
+  "request_failed": "Request failed",
+  "log_out_successfully": "Logged out successfully"
 }

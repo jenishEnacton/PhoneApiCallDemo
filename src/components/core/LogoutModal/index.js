@@ -30,6 +30,7 @@ export const LogoutModal = props => {
             extrasty={styles.btn}
             title={'Log Out'}
             onPress={props.onPressLogout}
+            borderRadius={20}
           />
         </View>
       </TouchableOpacity>

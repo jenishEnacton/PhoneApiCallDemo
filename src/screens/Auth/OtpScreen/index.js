@@ -8,6 +8,7 @@ import {setAsyncData} from '../../../assets/Utils/asyncstorage';
 import {errorToast, sucessToast} from '../../../components/core/Toast';
 import {useDispatch, useSelector} from 'react-redux';
 import {request_user_email_otp} from '../../../Redux/Actions/userAuthActions';
+import {Loader} from '../../../components/core/Loader';
 
 export default function OtpScreen({route, navigation}) {
   const {otp, mobile, email} = route?.params;
@@ -15,6 +16,7 @@ export default function OtpScreen({route, navigation}) {
 
   const dispatch = useDispatch();
   const state = useSelector(state => state?.otp?.phone_number);
+  const loading = useSelector(state => state?.params.loading);
 
   const [enterOtp, setEnterOtp] = useState(null);
   const [newOtp, setNewOtp] = useState('');
@@ -75,7 +77,12 @@ export default function OtpScreen({route, navigation}) {
             setEnterOtp(code);
           }}
         />
-        <CButton title={'Verify'} onPress={onPressVerifyOtp} disabled={!otp} />
+        <CButton
+          title={'Verify'}
+          onPress={onPressVerifyOtp}
+          disabled={!otp}
+          borderRadius={20}
+        />
         {isResendDisabled && (
           <Text
             style={{fontSize: 15, color: COLORS.black}}>{`${timer} s`}</Text>
@@ -84,6 +91,7 @@ export default function OtpScreen({route, navigation}) {
           <Text>{'Resend OTP'}</Text>
         </TouchableOpacity>
       </View>
+      {loading && <Loader />}
     </View>
   );
 }

@@ -55,7 +55,7 @@ export default function HomeTopStore(props) {
   };
 
   const EmptystoreCard = () => {
-    return <StoreCard title={'No Data'} />;
+    return <StoreCard title={'No Data'} url={config.EMPTY_IMAGE_URL} />;
   };
 
   return (

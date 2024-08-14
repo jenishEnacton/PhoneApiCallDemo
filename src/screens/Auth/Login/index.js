@@ -34,7 +34,7 @@ import {COLORS} from '../../../assets/Theme/colors';
 import {userFbLogin} from '../../../Redux/Services/api';
 
 export default function Login({navigation}) {
-  const [isLoading, setIsLoading] = useState(false);
+  const loading = useSelector(state => state?.params.loading);
   const [otp, setOtp] = useState('');
   const [generateOtp, setGenerateOtp] = useState('');
   const [isVerified, setIsVerified] = useState(false);
@@ -175,6 +175,7 @@ export default function Login({navigation}) {
                 title={'Login'}
                 onPress={handleSubmit}
                 disabled={!isValid}
+                borderRadius={20}
               />
               <TouchableOpacity
                 style={styles.signupview}
@@ -238,7 +239,7 @@ export default function Login({navigation}) {
           )} */}
         {/* </ScrollView> */}
       </View>
-      {isLoading && <Loader />}
+      {loading && <Loader />}
     </View>
   );
 }
