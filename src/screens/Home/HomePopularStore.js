@@ -23,14 +23,14 @@ export default function HomePopularStore(props) {
           {
             borderBottomWidth: selectedCategory === item.name ? 1 : 0,
             borderBottomColor:
-              selectedCategory === item.name ? COLORS.secondary : COLORS.black,
+              selectedCategory === item.name ? COLORS.secondary : COLORS.grey,
           },
         ]}
         onPress={() => handleCategorySelect(item)}>
         <Text
           style={{
             color:
-              selectedCategory === item.name ? COLORS.secondary : COLORS.black,
+              selectedCategory === item.name ? COLORS.secondary : COLORS.grey,
           }}>
           {item.name}
         </Text>
@@ -50,12 +50,20 @@ export default function HomePopularStore(props) {
         title={item.name ? item.name : 'No Title'}
         bgColor={get_bg_color(index, 2)}
         url={item.logo ? item.logo : config.EMPTY_IMAGE_URL}
+        cash_back={item?.cashback_string ? item?.cashback_string : ''}
+        isOffer={item?.cashback_string ? true : false}
       />
     );
   };
 
   const EmptystoreCard = () => {
-    return <StoreCard title={'No Data'} url={config.EMPTY_IMAGE_URL} />;
+    return (
+      <StoreCard
+        title={'No Data'}
+        url={config.EMPTY_IMAGE_URL}
+        bgColor={COLORS.light_primary}
+      />
+    );
   };
 
   return (

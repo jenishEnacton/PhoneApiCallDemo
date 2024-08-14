@@ -23,14 +23,14 @@ export default function HomeCouponCard(props) {
           {
             borderBottomWidth: selectedCategory === item.name ? 1 : 0,
             borderBottomColor:
-              selectedCategory === item.name ? COLORS.secondary : COLORS.black,
+              selectedCategory === item.name ? COLORS.secondary : COLORS.grey,
           },
         ]}
         onPress={() => handleCategorySelect(item)}>
         <Text
           style={{
             color:
-              selectedCategory === item.name ? COLORS.secondary : COLORS.black,
+              selectedCategory === item.name ? COLORS.secondary : COLORS.grey,
           }}>
           {item.name}
         </Text>
@@ -50,12 +50,22 @@ export default function HomeCouponCard(props) {
         title={item.description ? item.description : 'No title'}
         bgColor={get_bg_color(index, 4)}
         url={item.logo ? item.logo : config.EMPTY_IMAGE_URL}
+        cash_back={
+          item?.store?.cashback_string ? item?.store?.cashback_string : ''
+        }
+        isOffer={item?.store?.cashback_string ? true : false}
       />
     );
   };
 
   const EmptystoreCard = () => {
-    return <StoreCouponCard title={'No Data'} url={config.EMPTY_IMAGE_URL} />;
+    return (
+      <StoreCouponCard
+        title={'No Data'}
+        url={config.EMPTY_IMAGE_URL}
+        bgColor={COLORS.light_primary}
+      />
+    );
   };
 
   return (

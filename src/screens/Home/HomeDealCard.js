@@ -24,14 +24,14 @@ export default function HomeDealCard(props) {
           {
             borderBottomWidth: selectedCategory === item.name ? 1 : 0,
             borderBottomColor:
-              selectedCategory === item.name ? COLORS.secondary : COLORS.black,
+              selectedCategory === item.name ? COLORS.secondary : COLORS.grey,
           },
         ]}
         onPress={() => handleCategorySelect(item)}>
         <Text
           style={{
             color:
-              selectedCategory === item.name ? COLORS.secondary : COLORS.black,
+              selectedCategory === item.name ? COLORS.secondary : COLORS.grey,
           }}>
           {item.name}
         </Text>
@@ -60,12 +60,14 @@ export default function HomeDealCard(props) {
         offer_price={
           item.offer_price ? printFormattedCurrency('$', item.offer_price) : ''
         }
+        cash_back={item.cashback_string ? item.cashback_string : ''}
+        isOffer={item.cashback_string ? true : false}
       />
     );
   };
 
   const EmptystoreCard = () => {
-    return <DealCard title={'No Data'} />;
+    return <DealCard title={'No Data'} bgColor={COLORS.light_primary} />;
   };
 
   return (

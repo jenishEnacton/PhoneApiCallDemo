@@ -1,16 +1,31 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {COLORS} from '../../../assets/Theme/colors';
 import config from '../../../react-native-config';
+import {ImageBackground} from 'react-native';
 
 export default function DealCard(props) {
-  const {title, bgColor, url, slug, retail_price, offer_price} = props;
+  const {
+    title,
+    bgColor,
+    url,
+    slug,
+    retail_price,
+    offer_price,
+    cash_back,
+    isOffer,
+  } = props;
   return (
     <View style={[styles.container, {backgroundColor: bgColor}]}>
-      <Image
+      <ImageBackground
         style={styles.image_container}
-        source={{uri: url ? url : config.EMPTY_IMAGE_URL}}
-      />
+        source={{uri: url ? url : config.EMPTY_IMAGE_URL}}>
+        {isOffer && (
+          <View style={styles.card_content}>
+            <Text style={styles.cashback_title}>{cash_back}</Text>
+          </View>
+        )}
+      </ImageBackground>
       <Text style={styles.card_title}>{title}</Text>
       <Text style={styles.slug_title} numberOfLines={2}>
         {slug}
@@ -61,7 +76,7 @@ const styles = StyleSheet.create({
   price_view: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    gap: 8,
     marginTop: 10,
   },
   offer_title: {
@@ -75,5 +90,18 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textDecorationLine: 'line-through',
     textDecorationStyle: 'solid',
+  },
+  card_content: {
+    backgroundColor: COLORS.secondary,
+    alignSelf: 'flex-end',
+    marginTop: 15,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+    paddingHorizontal: 5,
+    padding: 4,
+  },
+  cashback_title: {
+    fontSize: 10,
+    color: COLORS.white,
   },
 });

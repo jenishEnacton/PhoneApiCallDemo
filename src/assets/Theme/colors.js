@@ -10,6 +10,7 @@ export const COLORS = {
   home_bg: '#F0F0F0',
   gradient_secondary: '#BE5532',
   green_approved: '#14A235',
+  grey: '#929292',
 };
 
 const COLORS_SETS = {
