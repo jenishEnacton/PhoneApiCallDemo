@@ -49,7 +49,7 @@ export default function HomePopularStore(props) {
       <StoreCard
         title={item.name ? item.name : 'No Title'}
         bgColor={get_bg_color(index, 2)}
-        url={item.logo ? item.logo : config.EMPTY_IMAGE_URL}
+        url={item?.logo ? item?.logo : config.EMPTY_IMAGE_URL}
         cash_back={item?.cashback_string ? item?.cashback_string : ''}
         isOffer={item?.cashback_string ? true : false}
       />

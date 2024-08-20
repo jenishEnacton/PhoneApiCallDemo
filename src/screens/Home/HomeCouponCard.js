@@ -45,11 +45,13 @@ export default function HomeCouponCard(props) {
   const stores = selectedCategoryData ? selectedCategoryData.coupons : [];
 
   const renderStoreCard = ({item, index}) => {
+    // console.log(item?.store?.logo);
+
     return (
       <StoreCouponCard
         title={item.description ? item.description : 'No title'}
         bgColor={get_bg_color(index, 4)}
-        url={item.logo ? item.logo : config.EMPTY_IMAGE_URL}
+        url={item?.store?.logo ? item?.store?.logo : config.EMPTY_IMAGE_URL}
         cash_back={
           item?.store?.cashback_string ? item?.store?.cashback_string : ''
         }

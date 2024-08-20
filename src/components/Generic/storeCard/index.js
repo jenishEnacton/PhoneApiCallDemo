@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import {COLORS} from '../../../assets/Theme/colors';
 import CashBackString from '../../core/CashBackString';
 import Icon from '../../../assets/icons';
+import {SvgUri} from 'react-native-svg';
 
 export default function StoreCard(props) {
   const {title, bgColor, url, cash_back, isOffer} = props;
@@ -10,10 +11,17 @@ export default function StoreCard(props) {
   const onPressLike = () => {
     setSelected(!selected);
   };
+
+  const isSvg = url?.endsWith('.svg');
+
   return (
     <TouchableOpacity style={[styles.card_view, {backgroundColor: bgColor}]}>
       <View style={styles.logo_view}>
-        <Image source={{uri: url}} style={styles.store_image} />
+        {isSvg ? (
+          <SvgUri uri={url} height={40} width={40} style={styles.svg_image} />
+        ) : (
+          <Image source={{uri: url}} style={styles.store_image} />
+        )}
       </View>
       <TouchableOpacity style={styles.like_view} onPress={onPressLike}>
         <Icon.AntDesign name={selected ? 'heart' : 'hearto'} size={18} />
@@ -69,5 +77,8 @@ const styles = StyleSheet.create({
   header_view: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  svg_image: {
+    alignSelf: 'center',
   },
 });

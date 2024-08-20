@@ -65,15 +65,17 @@ export default function HomeSlider(props) {
 
 const styles = StyleSheet.create({
   image_sty: {
+    width: '90%',
     height: 200,
-    width: 370,
-    resizeMode: 'cover',
-    margin: 10,
+    resizeMode: 'contain',
     borderRadius: 15,
   },
   container: {
     backgroundColor: COLORS.primary,
     paddingBottom: 10,
+    alignItems: 'center',
+    marginTop: 15,
+    borderRadius: 20,
   },
   paginationContainer: {
     flexDirection: 'row',
