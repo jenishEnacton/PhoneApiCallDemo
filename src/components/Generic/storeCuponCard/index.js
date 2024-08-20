@@ -4,9 +4,11 @@ import {COLORS} from '../../../assets/Theme/colors';
 import {AppImages} from '../../../assets/images';
 
 export default function StoreCouponCard(props) {
-  const {title, bgColor, url, cash_back, isOffer} = props;
+  const {title, bgColor, url, cash_back, isOffer, onPressShowModal} = props;
   return (
-    <TouchableOpacity style={[styles.card_view, {backgroundColor: bgColor}]}>
+    <TouchableOpacity
+      style={[styles.card_view, {backgroundColor: bgColor}]}
+      onPress={onPressShowModal}>
       <View style={styles.logo_view}>
         <Image source={{uri: url}} style={styles.store_image} />
         {isOffer && (

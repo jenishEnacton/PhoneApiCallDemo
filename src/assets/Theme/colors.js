@@ -11,6 +11,8 @@ export const COLORS = {
   gradient_secondary: '#BE5532',
   green_approved: '#14A235',
   grey: '#929292',
+  blackText: '#303030',
+  coupon_code_bg_color: '#E6936B4D',
 };
 
 const COLORS_SETS = {

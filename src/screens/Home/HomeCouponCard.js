@@ -3,9 +3,12 @@ import React, {useState} from 'react';
 import {COLORS, get_bg_color} from '../../assets/Theme/colors';
 import StoreCouponCard from '../../components/Generic/storeCuponCard';
 import config from '../../react-native-config';
+import CouponModal from '../../components/Generic/CouponModal';
 
 export default function HomeCouponCard(props) {
   const {item} = props;
+  const [show, setShow] = useState(false);
+  const [selectedItem, setSelectedItem] = useState('');
 
   const [selectedCategory, setSelectedCategory] = useState(
     item.categories[0]?.name || '',
@@ -45,8 +48,6 @@ export default function HomeCouponCard(props) {
   const stores = selectedCategoryData ? selectedCategoryData.coupons : [];
 
   const renderStoreCard = ({item, index}) => {
-    // console.log(item?.store?.logo);
-
     return (
       <StoreCouponCard
         title={item.description ? item.description : 'No title'}
@@ -56,6 +57,10 @@ export default function HomeCouponCard(props) {
           item?.store?.cashback_string ? item?.store?.cashback_string : ''
         }
         isOffer={item?.store?.cashback_string ? true : false}
+        onPressShowModal={() => {
+          setShow(true);
+          setSelectedItem(item);
+        }}
       />
     );
   };
@@ -89,6 +94,11 @@ export default function HomeCouponCard(props) {
         horizontal
         showsHorizontalScrollIndicator={false}
         ListEmptyComponent={EmptystoreCard}
+      />
+      <CouponModal
+        onPressVisible={show}
+        onRequestClose={() => setShow(false)}
+        item={selectedItem}
       />
     </View>
   );
