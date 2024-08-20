@@ -13,6 +13,7 @@ export const COLORS = {
   grey: '#929292',
   blackText: '#303030',
   coupon_code_bg_color: '#E6936B4D',
+  background: '#F8F8F8',
 };
 
 const COLORS_SETS = {

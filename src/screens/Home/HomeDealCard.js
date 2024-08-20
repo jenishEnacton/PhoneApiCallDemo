@@ -4,13 +4,18 @@ import {COLORS, get_bg_color} from '../../assets/Theme/colors';
 import config from '../../react-native-config';
 import DealCard from '../../components/Generic/dealCard';
 import {printFormattedCurrency} from '../../Redux/utils';
+import DealModal from '../../components/Generic/DealModal';
+import {useDispatch} from 'react-redux';
+import {request_deal_info} from '../../Redux/Actions/publicData';
 
 export default function HomeDealCard(props) {
   const {item} = props;
-
+  const dispatch = useDispatch();
+  const [show, setShow] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(
     item.categories[0]?.name || '',
   );
+  const [selectedItem, setSelectedItem] = useState('');
 
   const handleCategorySelect = category => {
     setSelectedCategory(category.name);
@@ -62,6 +67,11 @@ export default function HomeDealCard(props) {
         }
         cash_back={item.cashback_string ? item.cashback_string : ''}
         isOffer={item.cashback_string ? true : false}
+        onPressShowModal={() => {
+          dispatch(request_deal_info(item.id));
+          setSelectedItem(item);
+          setShow(true);
+        }}
       />
     );
   };
@@ -89,6 +99,11 @@ export default function HomeDealCard(props) {
         horizontal
         showsHorizontalScrollIndicator={false}
         ListEmptyComponent={EmptystoreCard}
+      />
+      <DealModal
+        onPressVisible={show}
+        onRequestClose={() => setShow(false)}
+        item={selectedItem}
       />
     </View>
   );

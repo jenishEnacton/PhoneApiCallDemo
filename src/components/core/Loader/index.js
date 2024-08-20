@@ -2,10 +2,10 @@
 import {ActivityIndicator, View, StyleSheet} from 'react-native';
 import {COLORS} from '../../../assets/Theme/colors';
 
-// Common loader component
-export const Loader = () => {
+export const Loader = props => {
+  const {extra_style} = props;
   return (
-    <View style={localStyle.main}>
+    <View style={[localStyle.main, {backgroundColor: extra_style}]}>
       <ActivityIndicator size={'large'} color={COLORS.secondary} />
     </View>
   );

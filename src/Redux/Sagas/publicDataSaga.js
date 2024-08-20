@@ -6,6 +6,7 @@ import api from '../Services/api';
 
 export function* watch_public_data_request() {
   yield takeEvery(types.REQUEST_HOME_SCREENDATA, request_home_screenData);
+  yield takeEvery(types.REQUEST_DEAL_INFO, request_deal_info);
 }
 
 function* request_home_screenData() {
@@ -27,6 +28,32 @@ function* request_home_screenData() {
     }
   } catch (error) {
     yield put(public_actions.failed_home_screenData());
+    console.log(error);
+  }
+}
+
+function* request_deal_info(action) {
+  try {
+    const response = yield call(
+      api.publicAPI,
+      config.API_URL +
+        config.PUBLIC_PREFIX +
+        '/app/dealInfo/' +
+        action.payload.deal_id,
+    );
+    console.log('Selected Deal res', response?.data?.data);
+    if (
+      response.ok &&
+      response.data.success &&
+      response.data.data &&
+      !response.data.data.error
+    ) {
+      yield put(public_actions.success_deal_info(response.data.data));
+    } else {
+      yield put(public_actions.failed_deal_info());
+    }
+  } catch (error) {
+    yield put(public_actions.failed_deal_info());
     console.log(error);
   }
 }

@@ -88,9 +88,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     width: '100%',
   },
-  text: {
-    fontSize: 20,
-  },
   inner_view: {
     backgroundColor: COLORS.white,
     padding: 15,

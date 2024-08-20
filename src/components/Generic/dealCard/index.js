@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {COLORS} from '../../../assets/Theme/colors';
 import config from '../../../react-native-config';
@@ -14,9 +14,12 @@ export default function DealCard(props) {
     offer_price,
     cash_back,
     isOffer,
+    onPressShowModal,
   } = props;
   return (
-    <View style={[styles.container, {backgroundColor: bgColor}]}>
+    <TouchableOpacity
+      style={[styles.container, {backgroundColor: bgColor}]}
+      onPress={onPressShowModal}>
       <ImageBackground
         style={styles.image_container}
         source={{uri: url ? url : config.EMPTY_IMAGE_URL}}>
@@ -34,7 +37,7 @@ export default function DealCard(props) {
         <Text style={styles.retail_title}>{retail_price}</Text>
         <Text style={styles.offer_title}>{offer_price}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
