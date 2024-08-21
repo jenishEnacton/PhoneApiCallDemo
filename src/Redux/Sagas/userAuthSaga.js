@@ -201,7 +201,7 @@ function* request_user_login(action) {
           is_social: false,
         }),
       );
-      navigate('Home');
+      navigate('TabNavigation');
     } else {
       if (response.data?.data?.error?.email) {
         errorToast(response.data?.data?.error?.email[0]);

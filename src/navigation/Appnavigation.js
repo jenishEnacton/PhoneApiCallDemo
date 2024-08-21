@@ -12,6 +12,7 @@ import ChangePassword from '../screens/Auth/ChangePass]word';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Profile from '../screens/Profile';
 import Icons from '../assets/icons';
+import StoreDetails from '../screens/StoreDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -49,6 +50,7 @@ export const Appnavigation = () => {
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="ForgotPassOtp" component={ForgotPassOtp} />
         <Stack.Screen name="ChangePassword" component={ChangePassword} />
+        <Stack.Screen name="StoreDetails" component={StoreDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );

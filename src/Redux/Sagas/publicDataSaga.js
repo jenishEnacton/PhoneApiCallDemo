@@ -3,10 +3,12 @@ import * as types from '../Actions/actionTypes';
 import * as public_actions from '../Actions/publicData';
 import config from '../../react-native-config';
 import api from '../Services/api';
+import {navigate} from '../../navigation/Appnavigation';
 
 export function* watch_public_data_request() {
   yield takeEvery(types.REQUEST_HOME_SCREENDATA, request_home_screenData);
   yield takeEvery(types.REQUEST_DEAL_INFO, request_deal_info);
+  yield takeEvery(types.REQUEST_STORE_DETAILS, request_store_details);
 }
 
 function* request_home_screenData() {
@@ -54,6 +56,33 @@ function* request_deal_info(action) {
     }
   } catch (error) {
     yield put(public_actions.failed_deal_info());
+    console.log(error);
+  }
+}
+
+function* request_store_details(action) {
+  try {
+    const response = yield call(
+      api.publicAPI,
+      config.API_URL +
+        config.PUBLIC_PREFIX +
+        '/app/storeInfo/' +
+        action.payload.store_id,
+    );
+    console.log('info res data', response?.data?.data);
+    if (
+      response.ok &&
+      response.data.success &&
+      response.data.data &&
+      !response.data.data.error
+    ) {
+      yield put(public_actions.success_store_details(response.data.data));
+      navigate('StoreDetails');
+    } else {
+      yield put(public_actions.failed_store_details());
+    }
+  } catch (error) {
+    yield put(public_actions.failed_store_details());
     console.log(error);
   }
 }

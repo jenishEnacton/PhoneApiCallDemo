@@ -20,7 +20,7 @@ import {AppImages} from '../../assets/images';
 import HomeImageCard from './HomeImageCard';
 import HomeSlider from './HomeSlider';
 
-function Home() {
+function Home({navigation}) {
   const [language, setLanguage] = useState(false);
   const dispatch = useDispatch();
   const data = useSelector(getHomeScreenData);
@@ -53,7 +53,7 @@ function Home() {
     let newData = Object.values(item);
     switch (newData[0].blockName) {
       case 'procash/featured-stores':
-        return <HomeTopStore item={newData[0]} />;
+        return <HomeTopStore item={newData[0]} navigation={navigation} />;
       case 'procash/top-stores':
         return <HomePopularStore item={newData[0]} />;
       case 'procash/top-offers':

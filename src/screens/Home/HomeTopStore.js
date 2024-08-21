@@ -3,10 +3,11 @@ import React, {useState} from 'react';
 import {COLORS, get_bg_color} from '../../assets/Theme/colors';
 import StoreCard from '../../components/Generic/storeCard';
 import config from '../../react-native-config';
+import {useDispatch} from 'react-redux';
+import {request_store_details} from '../../Redux/Actions/publicData';
 
-export default function HomeTopStore(props) {
-  const {item} = props;
-
+export default function HomeTopStore({item, navigation}) {
+  const dispatch = useDispatch();
   const [selectedCategory, setSelectedCategory] = useState(
     item.categories[0]?.name || '',
   );
@@ -52,6 +53,7 @@ export default function HomeTopStore(props) {
         url={item.logo ? item.logo : config.EMPTY_IMAGE_URL}
         cash_back={item?.cashback_string ? item?.cashback_string : ''}
         isOffer={item?.cashback_string ? true : false}
+        onPressStore={() => dispatch(request_store_details(item.id))}
       />
     );
   };

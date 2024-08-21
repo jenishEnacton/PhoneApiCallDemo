@@ -66,3 +66,16 @@ export const formatString = str => {
 
   return capitalized;
 };
+
+export const get_constructed_cashback = (amount_type, current_cb) => {
+  let amount = '';
+  if (!current_cb) {
+    return '';
+  }
+  if (amount_type === 'percent') {
+    amount = current_cb + '%';
+  } else {
+    amount = current_cb + '%';
+  }
+  return amount;
+};

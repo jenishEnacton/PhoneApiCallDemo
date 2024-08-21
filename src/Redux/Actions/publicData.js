@@ -47,3 +47,27 @@ export const failed_deal_info = () => ({
     deal_info: {},
   },
 });
+
+export const request_store_details = store_id => ({
+  type: types.REQUEST_STORE_DETAILS,
+  payload: {
+    loading: true,
+    store_id,
+  },
+});
+
+export const success_store_details = data => ({
+  type: types.SUCCESS_STORE_DETAILS,
+  payload: {
+    loading: false,
+    store_details: data,
+  },
+});
+
+export const failed_store_details = () => ({
+  type: types.FAILED_STORE_DETAILS,
+  payload: {
+    loading: false,
+    store_details: {},
+  },
+});

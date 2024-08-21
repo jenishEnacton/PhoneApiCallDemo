@@ -6,7 +6,7 @@ import Icon from '../../../assets/icons';
 import {SvgUri} from 'react-native-svg';
 
 export default function StoreCard(props) {
-  const {title, bgColor, url, cash_back, isOffer} = props;
+  const {title, bgColor, url, cash_back, isOffer, onPressStore} = props;
   const [selected, setSelected] = useState(false);
   const onPressLike = () => {
     setSelected(!selected);
@@ -15,7 +15,9 @@ export default function StoreCard(props) {
   const isSvg = url?.endsWith('.svg');
 
   return (
-    <TouchableOpacity style={[styles.card_view, {backgroundColor: bgColor}]}>
+    <TouchableOpacity
+      style={[styles.card_view, {backgroundColor: bgColor}]}
+      onPress={onPressStore}>
       <View style={styles.logo_view}>
         {isSvg ? (
           <SvgUri uri={url} height={40} width={40} style={styles.svg_image} />

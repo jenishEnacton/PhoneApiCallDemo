@@ -4,11 +4,11 @@ import {AppImages} from '../../../assets/images';
 import {COLORS} from '../../../assets/Theme/colors';
 
 export default function CashBackString(props) {
-  const {cash_back} = props;
+  const {cash_back, extra_sty, extra_text} = props;
   return (
-    <View style={styles.cashBackView}>
+    <View style={[styles.cashBackView, extra_sty]}>
       <Image source={AppImages.cb_string_icon} style={styles.cashback_icon} />
-      <Text style={styles.cashBack_str}>{cash_back}</Text>
+      <Text style={[styles.cashBack_str, extra_text]}>{cash_back}</Text>
     </View>
   );
 }

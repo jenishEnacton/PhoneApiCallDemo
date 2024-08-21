@@ -6,6 +6,7 @@ export const AppImages = {
   home_footer_img: require('./gr_home_img.png'),
   close_btn_img: require('./close_btn_icon.png'),
   cb_icon: require('./cb-icon.png'),
+  gr_store_img: require('./gr_store_img.png'),
   cb_string_icon: {
     uri: 'https://procash.enactweb.com/img/money-back-guarantee.png',
   },

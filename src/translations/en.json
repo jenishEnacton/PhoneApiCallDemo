@@ -11,5 +11,19 @@
   "log_out_successfully": "Logged out successfully",
   "shop_now": "Shop Now",
   "valid_until": "Valid Until",
-  "get_deal": "Get Deal"
+  "get_deal": "Get Deal",
+  "copied": "Text Copied",
+  "how_works": "How It Works",
+  "terms_condition": "Terms & Conditions",
+  "track_within": "Tracked Within",
+  "paid_within": "Paid Within",
+  "missing_cashback": "Missing Cashback",
+  "allowed": "Allowed",
+  "not_allowed": "Not Allowed",
+  "cashback_rates": "Cashback Rates",
+  "view_more": "View More",
+  "coupon_offers": "Coupon & Offers",
+  "no_coupon": "No coupons Found!",
+  "view_deals": "View Deals",
+  "view_daily_deals_from": "View Daily Deals from"
 }

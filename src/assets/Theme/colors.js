@@ -14,6 +14,10 @@ export const COLORS = {
   blackText: '#303030',
   coupon_code_bg_color: '#E6936B4D',
   background: '#F8F8F8',
+  border_light: '#DDDDDD',
+  error: '#e63946',
+  grey_underline: '#707070',
+  cb_rates: '#E6936B40',
 };
 
 const COLORS_SETS = {

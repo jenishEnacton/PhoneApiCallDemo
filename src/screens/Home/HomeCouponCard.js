@@ -50,12 +50,14 @@ export default function HomeCouponCard(props) {
   const renderStoreCard = ({item, index}) => {
     return (
       <StoreCouponCard
-        title={item.description ? item.description : 'No title'}
+        title={item.title ? item.title : null}
         bgColor={get_bg_color(index, 4)}
         url={item?.store?.logo ? item?.store?.logo : config.EMPTY_IMAGE_URL}
         cash_back={
           item?.store?.cashback_string ? item?.store?.cashback_string : ''
         }
+        isCode={item?.code ? true : false}
+        offer_code={item?.code ? item?.code : null}
         isOffer={item?.store?.cashback_string ? true : false}
         onPressShowModal={() => {
           setShow(true);

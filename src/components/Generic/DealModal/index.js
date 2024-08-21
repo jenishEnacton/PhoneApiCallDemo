@@ -119,7 +119,7 @@ export default function DealModal(props) {
                       marginBottom: !deal?.expiry_date ? 20 : 5,
                     },
                   ]}>
-                  <Text style={styles.btn_text}>{trasnlate('shop_now')}</Text>
+                  <Text style={styles.btn_text}>{trasnlate('get_deal')}</Text>
                 </TouchableOpacity>
               )}
               {deal?.expiry_date ? (

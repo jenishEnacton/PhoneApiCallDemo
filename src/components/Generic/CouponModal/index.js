@@ -16,7 +16,6 @@ import {trasnlate} from '../../../translations';
 import {SvgUri} from 'react-native-svg';
 
 const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 export default function CouponModal(props) {
   const {onPressVisible, onRequestClose, item} = props;
@@ -66,7 +65,7 @@ export default function CouponModal(props) {
                   source={AppImages.cb_icon}
                   style={styles.cashback_icon}
                 />
-                <Text style={styles.coupon_code_text}>{item.code}</Text>
+                <Text style={styles.coupon_code_text}>{item?.code}</Text>
               </TouchableOpacity>
             ) : (
               <View style={styles.empty_coupon} />
@@ -158,6 +157,8 @@ const styles = StyleSheet.create({
     minWidth: '40%',
     justifyContent: 'space-evenly',
     backgroundColor: COLORS.coupon_code_bg_color,
+    alignSelf: 'center',
+    marginTop: 20,
   },
   empty_coupon: {
     maxWidth: '80%',

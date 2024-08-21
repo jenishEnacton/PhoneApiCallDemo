@@ -3,9 +3,19 @@ import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {COLORS} from '../../../assets/Theme/colors';
 import CButton from '../../core/CButton';
+import config from '../../../react-native-config';
 
 export default function GradientFooter(props) {
-  const {gradientStyle, main_title, sub_title, btn_title, source} = props;
+  const {
+    gradientStyle,
+    main_title,
+    sub_title,
+    btn_title,
+    source,
+    main_title_style,
+    img_sty,
+    sub_title_style,
+  } = props;
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -15,8 +25,12 @@ export default function GradientFooter(props) {
         end={{x: 1, y: 0}}>
         <View style={styles.inner_container}>
           <View style={{gap: 2}}>
-            <Text style={styles.main_title_sty}>{main_title}</Text>
-            <Text style={styles.sub_title_sty}>{sub_title}</Text>
+            <Text style={[styles.main_title_sty, main_title_style]}>
+              {main_title}
+            </Text>
+            <Text style={[styles.sub_title_sty, sub_title_style]}>
+              {sub_title}
+            </Text>
           </View>
           <CButton
             title={btn_title}
@@ -25,7 +39,10 @@ export default function GradientFooter(props) {
             borderRadius={30}
           />
         </View>
-        <Image source={source} />
+        <Image
+          source={source ? source : {uri: config.EMPTY_IMAGE_URL}}
+          style={img_sty}
+        />
       </LinearGradient>
     </View>
   );
