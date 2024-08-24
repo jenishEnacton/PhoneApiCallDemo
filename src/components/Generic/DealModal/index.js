@@ -29,7 +29,6 @@ export default function DealModal(props) {
 
   const deal = useSelector(state => state?.params?.deal_info);
   const loading = useSelector(state => state?.params?.loading);
-  console.log(deal);
 
   return (
     <Modal
@@ -110,6 +109,9 @@ export default function DealModal(props) {
                 stylesheet={StyleSheet.create({
                   ...fontStyles.html_view_txtStyles,
                 })}
+                textComponentProps={{
+                  style: {color: COLORS.blackText},
+                }}
               />
               {!loading && (
                 <TouchableOpacity

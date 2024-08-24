@@ -15,6 +15,7 @@ export default function GradientFooter(props) {
     main_title_style,
     img_sty,
     sub_title_style,
+    onPress,
   } = props;
   return (
     <View style={styles.container}>
@@ -37,6 +38,7 @@ export default function GradientFooter(props) {
             extrasty={styles.btn}
             extra_title_sty={{color: COLORS.white, fontSize: 14}}
             borderRadius={30}
+            onPress={onPress}
           />
         </View>
         <Image

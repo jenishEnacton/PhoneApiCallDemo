@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import {COLORS} from '../../../assets/Theme/colors';
 import {AppImages} from '../../../assets/images';
 import Icons from '../../../assets/icons';
-import Clipboard from '@react-native-clipboard/clipboard';
+import Clipboard from '@react-native-community/clipboard';
 import {SuccessToast} from 'react-native-toast-message';
 import {trasnlate} from '../../../translations';
 
@@ -20,17 +20,10 @@ export default function StoreCouponCard(props) {
     maincard,
   } = props;
 
-  const [copiedText, setCopiedText] = useState('');
-
   function copyCode(offer_code) {
     Clipboard.setString(offer_code);
     SuccessToast('Sucess', trasnlate('copied'));
   }
-
-  const fetchCopiedText = async () => {
-    const text = await Clipboard.getString();
-    setCopiedText(text);
-  };
 
   return (
     <TouchableOpacity
@@ -48,7 +41,6 @@ export default function StoreCouponCard(props) {
       <Text style={styles.card_title} numberOfLines={1}>
         {title}
       </Text>
-      {copiedText && <Text>{copiedText}</Text>}
       <View style={styles.cpn_code_wrapper}>
         {isCode ? (
           <TouchableOpacity

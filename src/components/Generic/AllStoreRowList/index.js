@@ -13,10 +13,13 @@ import {trasnlate} from '../../../translations/index';
 import config from '../../../react-native-config';
 import CashBackString from '../../core/CashBackString';
 import {SvgUri} from 'react-native-svg';
+import {useDispatch, useSelector} from 'react-redux';
+import {request_store_details} from '../../../Redux/Actions/publicData';
 const windowWidth = Dimensions.get('window').width;
 
 export default function AllStoreRowList(props) {
   const lists = props.list;
+  const dispatch = useDispatch();
 
   const renderStores = ({item, index}) => {
     const isSvg = item?.logo?.endsWith('.svg');
@@ -24,7 +27,10 @@ export default function AllStoreRowList(props) {
       ?.replace('Upto ', '')
       ?.replace('Flat ', '');
     return (
-      <TouchableOpacity key={index.toString()} style={styles.st_card}>
+      <TouchableOpacity
+        key={index.toString()}
+        style={styles.st_card}
+        onPress={() => dispatch(request_store_details(item.id))}>
         <View
           style={[styles.st_logo_box, {alignItems: isSvg ? 'center' : null}]}>
           {isSvg ? (

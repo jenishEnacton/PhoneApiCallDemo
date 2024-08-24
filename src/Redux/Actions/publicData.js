@@ -196,3 +196,41 @@ export const failed_deals_filter_info = () => ({
     deals_filter_info: {},
   },
 });
+
+export const request_filtered_coupons = (
+  coupon_filter_cats,
+  coupon_filter_stores,
+  coupon_filter_order_type,
+  coupon_filter_page_no,
+  coupon_filter_per_page,
+  coupon_filter_show_type,
+  filter_page,
+) => ({
+  type: types.REQUEST_FILTERED_COUPONS,
+  payload: {
+    loading: true,
+    coupon_filter_cats,
+    coupon_filter_stores,
+    coupon_filter_per_page,
+    coupon_filter_show_type,
+    coupon_filter_order_type,
+    coupon_filter_page_no,
+    filter_page,
+  },
+});
+
+export const success_filtered_coupons = data => ({
+  type: types.SUCCESS_FILTERED_COUPONS,
+  payload: {
+    loading: false,
+    filtered_coupons_data: data,
+  },
+});
+
+export const failed_filtered_coupons = () => ({
+  type: types.FAILED_FILTERED_COUPONS,
+  payload: {
+    loading: false,
+    filtered_coupons_data: {},
+  },
+});

@@ -16,14 +16,12 @@ export default function CatCard(props) {
 
   function handle_cat_click() {
     if (data_type === 'store') {
-      console.log('store');
       dispatch(request_store_cat_details(cat.id, cat));
     }
     if (props.data_type === 'coupon') {
       dispatch(request_coupon_cat_details(cat.id));
     }
     if (props.data_type === 'deal') {
-      console.log('Deal');
       navigation.navigate('AllDeals', {
         cats: [cat.id],
         title: cat.name.en ? cat.name.en : cat.name,

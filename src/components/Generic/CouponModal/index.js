@@ -12,14 +12,22 @@ import {COLORS} from '../../../assets/Theme/colors';
 import CloseButton from '../../core/CloseButton';
 import config from '../../../react-native-config';
 import {AppImages} from '../../../assets/images';
-import {trasnlate} from '../../../translations';
 import {SvgUri} from 'react-native-svg';
+import Clipboard from '@react-native-community/clipboard';
+import {sucessToast} from '../../core/Toast';
+import {trasnlate} from '../../../translations/index';
 
 const windowWidth = Dimensions.get('window').width;
 
 export default function CouponModal(props) {
   const {onPressVisible, onRequestClose, item} = props;
   const isSvg = item?.store?.logo?.endsWith('.svg');
+
+  function copy_code() {
+    Clipboard.setString(item.code);
+    sucessToast('Sucess', trasnlate('copied'));
+  }
+
   return (
     <Modal
       animationType="fade"
@@ -60,7 +68,9 @@ export default function CouponModal(props) {
               <Text style={styles.description_text}>{item?.description}</Text>
             ) : null}
             {item.code ? (
-              <TouchableOpacity style={styles.coupon_code}>
+              <TouchableOpacity
+                style={styles.coupon_code}
+                onPress={() => copy_code()}>
                 <Image
                   source={AppImages.cb_icon}
                   style={styles.cashback_icon}

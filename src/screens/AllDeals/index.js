@@ -13,10 +13,11 @@ import DealCard from '../../components/Generic/dealCard';
 import {COLORS, get_bg_color} from '../../assets/Theme/colors';
 import {printFormattedCurrency} from '../../Redux/utils';
 import DealModal from '../../components/Generic/DealModal';
+import config from '../../react-native-config';
 
 export default function AllDeals({route}) {
-  const {cats, title} = route.params;
-  const store = route?.params?.store || [];
+  const {cats, title, store} = route.params;
+
   const dispatch = useDispatch();
   const loading = useSelector(state => state?.params?.loading);
   const filtered_deals_data = useSelector(
@@ -71,24 +72,26 @@ export default function AllDeals({route}) {
   return (
     <View style={styles.container}>
       <Header isBack title={title} />
-      <View style={{flex: 1, marginHorizontal: 20}}>
-        <FlatList
-          data={filtered_deals_data.deals}
-          keyExtractor={item => '_' + item.id}
-          columnWrapperStyle={styles.row}
-          style={styles.list}
-          numColumns={2}
-          showsVerticalScrollIndicator={false}
-          renderItem={renderDeal}
-          ListEmptyComponent={emptyDealList}
+      <View style={{flex: 1}}>
+        <View style={{flex: 1, marginHorizontal: 20}}>
+          <FlatList
+            data={filtered_deals_data.deals}
+            keyExtractor={item => '_' + item.id}
+            columnWrapperStyle={styles.row}
+            style={styles.list}
+            numColumns={2}
+            showsVerticalScrollIndicator={false}
+            renderItem={renderDeal}
+            ListEmptyComponent={emptyDealList}
+          />
+        </View>
+        <DealModal
+          onPressVisible={show}
+          onRequestClose={() => setShow(false)}
+          item={selectedItem}
         />
+        {loading && <Loader extra_style={COLORS.white} />}
       </View>
-      <DealModal
-        onPressVisible={show}
-        onRequestClose={() => setShow(false)}
-        item={selectedItem}
-      />
-      {loading && <Loader extra_style={COLORS.white} />}
     </View>
   );
 }

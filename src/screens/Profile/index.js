@@ -1,4 +1,4 @@
-import {StyleSheet, View} from 'react-native';
+import {Alert, Linking, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import {COLORS} from '../../assets/Theme/colors';
 import {trasnlate} from '../../translations';
@@ -21,10 +21,33 @@ export default function Profile({navigation}) {
     setIsVisible(false);
   };
 
+  const email = 'jenish@gmail.com';
+
+  const handleLongPress = () => {
+    Alert.alert(
+      'Actions',
+      'What would you like to do?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Call',
+          onPress: async () => {
+            Linking.openURL(`mailto:${email}`);
+          },
+        },
+      ],
+      {cancelable: true},
+    );
+  };
+
   return (
     <View style={styles.container}>
       <Header title={trasnlate('profile')} isBack />
       <View style={styles.inner_container}>
+        <CButton title={email} onLongPress={handleLongPress} />
         <CButton
           title={trasnlate('log_out')}
           extrasty={styles.btn_sty}

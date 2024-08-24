@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     width: '90%',
     fontSize: 20,
     alignSelf: 'center',
+    color: COLORS.black,
   },
   errorText: {
     fontSize: 12,

@@ -28,7 +28,7 @@ import GradientFooter from '../../components/Generic/GradientFooter';
 import {AppImages} from '../../assets/images';
 import {SvgUri} from 'react-native-svg';
 
-export default function StoreDetails() {
+export default function StoreDetails({navigation}) {
   const store = useSelector(state => state?.params?.store_details);
   const [selected, setSelected] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -269,6 +269,12 @@ export default function StoreDetails() {
             source={AppImages.gr_store_img}
             img_sty={styles.footer_image}
             gradientStyle={{paddingHorizontal: 20}}
+            onPress={() =>
+              navigation.navigate('AllDeals', {
+                store: [store.store.id],
+                title: store?.store?.name,
+              })
+            }
           />
         </View>
       </ScrollContent>
@@ -307,6 +313,9 @@ export default function StoreDetails() {
                   stylesheet={StyleSheet.create({
                     ...fontStyles.html_view_txtStyles,
                   })}
+                  textComponentProps={{
+                    style: {color: COLORS.blackText},
+                  }}
                 />
               </ScrollView>
             </>

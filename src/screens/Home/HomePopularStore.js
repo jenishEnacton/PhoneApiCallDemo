@@ -34,6 +34,7 @@ export default function HomePopularStore(props) {
           style={{
             color:
               selectedCategory === item.name ? COLORS.secondary : COLORS.grey,
+            fontSize: 12,
           }}>
           {item.name}
         </Text>

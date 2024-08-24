@@ -13,6 +13,7 @@ export function* watch_public_data_request() {
   yield takeEvery(types.REQUEST_COUPON_CAT_DETAILS, request_coupon_cat_details);
   yield takeEvery(types.REQUEST_FILTERED_DEALS, request_filtered_deals);
   yield takeEvery(types.REQUEST_DEALS_FILTER_INFO, request_deals_filter_info);
+  yield takeEvery(types.REQUEST_FILTERED_COUPONS, request_filtered_coupons);
 }
 
 function* request_home_screenData() {
@@ -126,7 +127,7 @@ function* request_coupon_cat_details(action) {
         '/app/catInfo/' +
         action.payload.coupon_cat_id,
     );
-    console.log('Res Coupon', response?.data?.data);
+    // console.log('Res Coupon', response?.data?.data);
 
     if (
       response.ok &&
@@ -203,6 +204,38 @@ function* request_deals_filter_info(action) {
     }
   } catch (error) {
     yield put(public_actions.failed_deals_filter_info());
+    console.log(error);
+  }
+}
+function* request_filtered_coupons(action) {
+  try {
+    let body = {
+      cat: action.payload.coupon_filter_cats || null,
+      store: action.payload.coupon_filter_stores || null,
+      show: action.payload.coupon_filter_show_type || 'all',
+      order: action.payload.coupon_filter_order_type || 'popular',
+      page: action.payload.coupon_filter_page_no || 1,
+      perPage: action.payload.coupon_filter_per_page || 30,
+    };
+    const response = yield call(
+      api.publicPostAPI,
+      config.API_URL + config.PUBLIC_PREFIX + '/coupons',
+      body,
+    );
+    // console.log('filtered coupons', response.data.data);
+
+    if (
+      response.ok &&
+      response.data.success &&
+      response.data.data &&
+      !response.data.data.error
+    ) {
+      yield put(public_actions.success_filtered_coupons(response.data.data));
+    } else {
+      yield put(public_actions.failed_filtered_coupons());
+    }
+  } catch (error) {
+    yield put(public_actions.failed_filtered_coupons());
     console.log(error);
   }
 }
