@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     top: 50,
   },
   card_view: {
-    width: '80%',
+    width: '85%',
     backgroundColor: COLORS.white,
     elevation: 5,
     alignSelf: 'center',

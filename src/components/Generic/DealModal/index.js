@@ -29,6 +29,7 @@ export default function DealModal(props) {
 
   const deal = useSelector(state => state?.params?.deal_info);
   const loading = useSelector(state => state?.params?.loading);
+  console.log(deal);
 
   return (
     <Modal

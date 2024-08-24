@@ -13,6 +13,9 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Profile from '../screens/Profile';
 import Icons from '../assets/icons';
 import StoreDetails from '../screens/StoreDetails';
+import StoreCatDetails from '../screens/StoreCatDetails';
+import CouponCatDetails from '../screens/CouponCatDetails';
+import AllDeals from '../screens/AllDeals';
 
 const Stack = createNativeStackNavigator();
 
@@ -51,6 +54,9 @@ export const Appnavigation = () => {
         <Stack.Screen name="ForgotPassOtp" component={ForgotPassOtp} />
         <Stack.Screen name="ChangePassword" component={ChangePassword} />
         <Stack.Screen name="StoreDetails" component={StoreDetails} />
+        <Stack.Screen name="StoreCatDetails" component={StoreCatDetails} />
+        <Stack.Screen name="CouponCatDetails" component={CouponCatDetails} />
+        <Stack.Screen name="AllDeals" component={AllDeals} />
       </Stack.Navigator>
     </NavigationContainer>
   );

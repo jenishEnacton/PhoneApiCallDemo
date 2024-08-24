@@ -1,35 +1,39 @@
-import {
-  FlatList,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {COLORS, get_bg_color} from '../../assets/Theme/colors';
-import config from '../../react-native-config';
+import CatCard from '../../components/Generic/CatCard';
 
 export default function HomeCategoryCard(props) {
-  const {item} = props;
+  const {item, navigation} = props;
 
-  const renderHeader = ({item, index}) => {
+  const render_store_cat = ({item, index}) => {
     return (
-      <View style={{alignItems: 'center'}}>
-        <TouchableOpacity
-          style={[
-            styles.category_container,
-            {backgroundColor: get_bg_color(index, 8)},
-          ]}>
-          <Image
-            source={{uri: item?.icon ? item?.icon : config.EMPTY_IMAGE_URL}}
-            style={styles.image}
-          />
-        </TouchableOpacity>
-        <Text numberOfLines={1} style={styles.category_title}>
-          {item?.name ? item?.name : ''}
-        </Text>
-      </View>
+      <CatCard
+        cat={item}
+        bg_color={get_bg_color(index, 8)}
+        data_type={'store'}
+        navigation={navigation}
+      />
+    );
+  };
+  const render_categories = ({item, index}) => {
+    return (
+      <CatCard
+        cat={item}
+        bg_color={get_bg_color(index, 8)}
+        data_type={'coupon'}
+        navigation={navigation}
+      />
+    );
+  };
+  const render_deal_cat = ({item, index}) => {
+    return (
+      <CatCard
+        cat={item}
+        bg_color={get_bg_color(index, 8)}
+        data_type={'deal'}
+        navigation={navigation}
+      />
     );
   };
 
@@ -39,8 +43,16 @@ export default function HomeCategoryCard(props) {
         {item?.title ? item?.title?.en : ''}
       </Text>
       <FlatList
-        data={item?.categories}
-        renderItem={renderHeader}
+        data={item?.categories ? item?.categories : []}
+        renderItem={
+          item?.categories
+            ? item?.category_type === 'CouponCategory'
+              ? render_categories
+              : item?.category_type === 'DealCategory'
+              ? render_deal_cat
+              : render_store_cat
+            : render_store_cat
+        }
         horizontal
         showsHorizontalScrollIndicator={false}
       />

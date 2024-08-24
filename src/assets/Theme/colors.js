@@ -18,6 +18,7 @@ export const COLORS = {
   error: '#e63946',
   grey_underline: '#707070',
   cb_rates: '#E6936B40',
+  border_light: '#DDDDDD',
 };
 
 const COLORS_SETS = {

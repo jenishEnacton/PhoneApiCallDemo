@@ -75,7 +75,7 @@ export const get_constructed_cashback = (amount_type, current_cb) => {
   if (amount_type === 'percent') {
     amount = current_cb + '%';
   } else {
-    amount = current_cb + '%';
+    amount = '$' + current_cb;
   }
   return amount;
 };
