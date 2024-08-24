@@ -5,8 +5,9 @@ import {Appnavigation} from './src/navigation/Appnavigation';
 import Toast from 'react-native-toast-message';
 import {toastConfig} from './src/components/core/Toast';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import codePush from 'react-native-code-push';
 
-export default function App() {
+function App() {
   return (
     <Provider store={store}>
       <GestureHandlerRootView style={{flex: 1}}>
@@ -16,3 +17,5 @@ export default function App() {
     </Provider>
   );
 }
+
+export default codePush(App);

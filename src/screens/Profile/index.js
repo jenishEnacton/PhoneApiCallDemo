@@ -21,7 +21,7 @@ export default function Profile({navigation}) {
     setIsVisible(false);
   };
 
-  const email = 'jenish@gmail.com';
+  const email = '+91 7265079268';
 
   const handleLongPress = () => {
     Alert.alert(
@@ -35,7 +35,7 @@ export default function Profile({navigation}) {
         {
           text: 'Call',
           onPress: async () => {
-            Linking.openURL(`mailto:${email}`);
+            Linking.openURL(`tel:${email}`);
           },
         },
       ],
@@ -46,6 +46,7 @@ export default function Profile({navigation}) {
   return (
     <View style={styles.container}>
       <Header title={trasnlate('profile')} isBack />
+
       <View style={styles.inner_container}>
         <CButton title={email} onLongPress={handleLongPress} />
         <CButton

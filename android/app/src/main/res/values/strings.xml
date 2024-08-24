@@ -2,4 +2,7 @@
     <string name="app_name">GoogleSignDemo</string>
     <string name="facebook_app_id">1174222193633123</string>
     <string name="facebook_client_token">f9824b5878b4fcc4a0d3a017ad6e40e5</string>
+    <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">DO_NOT_ASK_JAVASCRIPT</string>
+    <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
+    <string moduleConfig="true" name="CodePushDeploymentKey">vdthiI-VXgwo0zmQl6zWFZ4ccP6AbkXP_ZpiP</string>
 </resources>

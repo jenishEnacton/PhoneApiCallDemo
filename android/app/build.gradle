@@ -92,11 +92,11 @@ android {
             }
         }
          release {
-             if (project.hasProperty('GooglesignDemo_UPLOAD_STORE_FILE')) {
-                storeFile file(GooglesignDemo_UPLOAD_STORE_FILE)
-                storePassword GooglesignDemo_UPLOAD_STORE_PASSWORD
-                keyAlias GooglesignDemo_UPLOAD_KEY_ALIAS
-                keyPassword GooglesignDemo_UPLOAD_KEY_PASSWORD
+             if (project.hasProperty('GooglesignDemo_RELEASE_STORE_FILE')) {
+                storeFile file(GoogleSignDemo_RELEASE_STORE_FILE)
+                storePassword GoogleSignDemo_RELEASE_STORE_PASSWORD
+                keyAlias GoogleSignDemo_RELEASE_KEY_ALIAS
+                keyPassword GoogleSignDemo_RELEASE_KEY_PASSWORD
             }
         }
     }
@@ -128,3 +128,4 @@ dependencies {
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
 apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"

@@ -81,7 +81,7 @@ const TabNavigation = () => {
               name="home"
               size={25}
               style={{
-                color: !focused ? '#201E43' : '#EF5A6F',
+                color: !focused ? '#201E43' : '#0D7C66',
               }}
             />
           ),
@@ -96,7 +96,7 @@ const TabNavigation = () => {
               name="person"
               size={25}
               style={{
-                color: !focused ? '#201E43' : '#EF5A6F',
+                color: !focused ? '#201E43' : '#0D7C66',
               }}
             />
           ),
